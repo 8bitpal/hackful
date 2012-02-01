@@ -1,4 +1,10 @@
 class Comment < ActiveRecord::Base
+	include ActionView::Helpers::SanitizeHelper
+
+  def before_create
+    self.text = sanitize(self.text)
+  end
+  
 	belongs_to :commentable, :polymorphic => true
 	belongs_to :user
 	

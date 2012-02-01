@@ -73,7 +73,7 @@ module ContentHelper
 			output += link_to "&#9650;".html_safe, new_user_session_path
 		end
 		output += "<br /><br /></td><td>"
-		output += "<strong>" + post.title + "</strong><br />"
+		output += "<strong>" + link_to(post.title, post) + "</strong><br />"
 		output += simple_format(auto_link(post.text))
 		output += "<div class='infobar'>"+pluralize(post.votes, "point") + " by " + post.user.name + " "+time_ago_in_words(post.created_at) + " ago &nbsp;"
 		if can? :update, post
