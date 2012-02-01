@@ -1,0 +1,114 @@
+body {
+	padding: 0px;
+	margin: 0px;
+	div {
+		font: {
+			font-family: verdana, arial, helvetica, sans-serif;
+			size: 12pt;
+		}
+	}
+}
+
+a:link {
+	text-decoration: none;
+}
+
+div {
+	#border: 1px solid #000;
+}
+
+.header {
+	background: {
+		color: #EBEBEB;
+	}
+	height: 40px;
+	margin: {
+		#top: 10px;
+	}
+	.title {
+		line-height: 40px;
+		padding: 10px;
+		font-size: 16pt;
+		img {
+			top: 3px;
+			position: relative;
+			margin-right: 5px;
+		}
+	}
+	.navigation {
+		padding: {
+			left: 3%;
+			top: 10%;
+		}
+		font-size: 12pt;
+	}
+	.user {
+		float: right;
+		padding: 10px;
+		font: {
+			size: 10pt;
+			weight: bold;
+		}
+	}
+	a {
+		color: #000;
+		&:visited {
+			color: #000; }
+		&:hover {
+			color: #000; } 
+	}
+}
+
+.body {
+	.voted a {
+		color: #E48E69;
+	}
+	.vote a {
+		color: #3C3C3C;
+	}
+	.infobar {
+		font: {
+			size: 8pt;
+		}
+		a {
+			font-weight: bold;
+			color: #7F7F7F;
+		}
+		color: #6A6A6A;
+	}
+	.host a:link {
+		font: {
+			size: 8pt;
+		}
+		color: #6A6A6A;
+		padding-left: 10px;
+	}
+	.comments_box {
+		margin-left: 15px;
+		position: relative;
+		td a {
+			font-size: 10pt;
+		}
+	}
+	.button {
+		padding: 2px;
+		background-color: #EBEBEB;
+		width: 100px;
+		text-align: center;
+		border: 1px solid #C8C8C8;
+		font-size: 10pt;
+	}
+	padding: 15px;
+}
+
+.footer {
+	background: {
+		color: #EBEBEB;
+	}
+	height: 30px;	
+	text-align: center;
+	line-height: 30px;
+	font: {
+		size: 10pt;
+	}
+}

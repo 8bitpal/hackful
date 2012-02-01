@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hackful Europe</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="header">
+	<span class="title"><img src="/assets/hackful.png" /><%= link_to "Hackful Europe", "/" %></span>
+	<span class="navigation"><%= link_to "top", "/" %> | <%= link_to "new", "/new" %> | <%= link_to "submit", "/posts/new" %></span>
+	<span class="user">
+		<% if user_signed_in? %>
+			<%= link_to "&#9998;".html_safe, "/users/edit"%>&nbsp;<%= current_user.name %>&nbsp;&nbsp;<%= link_to('Sign out', destroy_user_session_path, :method => :delete) %>
+		<% else %>
+			<%= link_to('Sign in', new_user_session_path)  %>
+		<% end %>
+	</span>
+</div>
+<div class="body">
+	<%= yield %>
+</div>
+<div class="footer">
+	FAQ&nbsp;&nbsp;|&nbsp;&nbsp;Guidelines&nbsp;&nbsp;|&nbsp;&nbsp;
+</div>
+</body>
+</html>
