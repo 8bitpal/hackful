@@ -14,6 +14,10 @@ a:link {
 	text-decoration: none;
 }
 
+a:visited {
+	text-decoration: none;
+}
+
 .header {
 	background: {
 		color: #EBEBEB;
@@ -76,6 +80,7 @@ a:link {
 			color: #7F7F7F;
 		}
 		color: #6A6A6A;
+		margin-left: 4px;
 	}
 	.host a:link {
 		font: {
@@ -131,6 +136,9 @@ p {
 	padding: 0px;
 }
 
-tr {
-	line-height: 1.2em;
+.page_navigation {
+	font: {
+		size: 10pt;
+		weight: bold;
+	}
 }

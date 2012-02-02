@@ -1,3 +1,5 @@
 <% @posts.each do |post| %>
 	<%= build_post_preview(post) %>
 <% end %>
+
+<%= link_to("Next", "/", page: @page+1) if @posts.count > 14 %>
