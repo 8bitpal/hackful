@@ -74,6 +74,7 @@ module ContentHelper
 		end
 		output += "<br /><br /></td><td>"
 		(post.link.nil? or post.link.empty?) ? (output += "<strong>"+link_to(post.title, post)+"</strong>") : (output += "<strong>"+link_to(post.title, post.link)+"</strong>")
+		output += "<span class='host'>"+link_to("("+URI.parse(post.link).host.gsub("www.","")+")", "http://"+URI.parse(post.link).host)+"</span>" unless post.link.nil? or post.link.empty?
 		output += simple_format(auto_link(post.text))
 		output += "<div class='infobar'>"+pluralize(post.votes, "point") + " by " + post.user.name + " "+time_ago_in_words(post.created_at) + " ago &nbsp;"
 		if can? :update, post
