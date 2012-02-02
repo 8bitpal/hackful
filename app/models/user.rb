@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 	has_many :posts
 	
 	validates_uniqueness_of :name
+	validates_format_of :name, :with => /\A[a-zA-Z0-9]+\z/i,
+	:message => "can only contain letters and numbers."
 	
 	make_voter
 end
