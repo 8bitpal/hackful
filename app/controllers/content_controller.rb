@@ -5,8 +5,8 @@ class ContentController < ApplicationController
   end
 
   def new
-		@page = params[:page].to_i
-		@posts = Post.find(:all, :order => "created_at DESC", :limit => ["?,15", @wpage*15])
+		params[:page].nil? ? @page = 0 : @page = params[:page].to_i
+		@posts = Post.find(:all, :order => "created_at DESC", :limit => ["?,15", @page*15])
   end
 
 end
