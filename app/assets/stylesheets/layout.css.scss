@@ -60,6 +60,13 @@ a:link {
 	.vote a {
 		color: #3C3C3C;
 	}
+	.arrow {
+		float: left;
+		width: 20px;
+	}
+	.text_body {
+		margin-left: 20px;
+	}
 	.infobar {
 		font: {
 			size: 8pt;
@@ -78,11 +85,12 @@ a:link {
 		padding-left: 10px;
 	}
 	.comments_box {
-		margin-left: 15px;
+		margin-left: 20px;
 		position: relative;
-		td a {
+		div a {
 			font-size: 10pt;
 		}
+		font-size: 10pt;
 	}
 	.button {
 		padding: 2px;
@@ -91,6 +99,14 @@ a:link {
 		text-align: center;
 		border: 1px solid #C8C8C8;
 		font-size: 10pt;
+	}
+	.post {
+		margin-bottom: 7px;
+		#border-bottom: 1px solid #F7F7F7;
+		padding-bottom: 7px;
+		.text_body {
+			font-size: 10pt
+		}
 	}
 	padding: 15px;
 }
@@ -105,4 +121,16 @@ a:link {
 	font: {
 		size: 10pt;
 	}
+}
+
+p {
+	margin: { 
+		top: 2px;
+		bottom: 2px;
+	}
+	padding: 0px;
+}
+
+tr {
+	line-height: 1.2em;
 }
