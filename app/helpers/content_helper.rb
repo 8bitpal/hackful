@@ -82,7 +82,7 @@ module ContentHelper
 		end
 		output += "</div>"
 		if can? :create, Comment
-			output += '<div id="comment_form" class="comment_form" style="clear: left">'
+			output += '<div id="comment_form" class="comment_form" style="clear: left; margin-left: 0px;">'
 			output += render :partial => 'comments/form', :locals => { :commentable_type => "Post", :commentable_id => post.id }
 			output += "</div>"
 		end
