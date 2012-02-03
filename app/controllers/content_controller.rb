@@ -8,5 +8,9 @@ class ContentController < ApplicationController
 		params[:page].nil? ? @page = 0 : @page = params[:page].to_i
 		@posts = Post.find(:all, :order => "created_at DESC", :limit => 15, :offset => (@page*15))
   end
+  
+  def about
+		respond_to.html
+  end
 
 end
