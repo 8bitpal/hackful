@@ -22,6 +22,10 @@ a:visited {
 	background: {
 		color: #EBEBEB;
 	}
+	padding: {
+		left: 10%;
+		right: 10%;
+	}
 	height: 40px;
 	.title {
 		line-height: 40px;
@@ -55,9 +59,14 @@ a:visited {
 		&:hover {
 			color: #000; } 
 	}
+	margin-bottom: 10px;
 }
 
 .body {
+	padding: {
+		left: 13%;
+		right: 13%;
+	}
 	.voted a {
 		color: #E48E69;
 	}
@@ -70,6 +79,21 @@ a:visited {
 	}
 	.text_body {
 		margin-left: 20px;
+		p {
+			margin-bottom: 6px;
+			a {
+				color: #E46934;
+			}
+			a:visited {
+				color: #E4916D;
+			}
+		}
+	}
+	.comment_form {
+		margin: {
+			left: 24px;
+			top: 4px;
+		}
 	}
 	.infobar {
 		font: {
@@ -80,7 +104,10 @@ a:visited {
 			color: #7F7F7F;
 		}
 		color: #6A6A6A;
-		margin-left: 4px;
+		margin: {
+			left: 4px;
+			bottom: 3px;
+		}
 	}
 	.host a:link {
 		font: {
@@ -89,6 +116,9 @@ a:visited {
 		color: #6A6A6A;
 		padding-left: 10px;
 	}
+	.comment {
+		margin-bottom: 15px;
+	}
 	.comments_box {
 		margin-left: 20px;
 		position: relative;
@@ -96,6 +126,15 @@ a:visited {
 			font-size: 10pt;
 		}
 		font-size: 10pt;
+		.comment_reply {
+			border: 1px solid #C8C8C8;
+			padding: 1px;
+			margin: {
+				left: 4px;
+				top: 2px;
+			}
+			background-color: #EBEBEB;
+		}
 	}
 	.button {
 		padding: 2px;
@@ -106,14 +145,21 @@ a:visited {
 		font-size: 10pt;
 	}
 	.post {
-		margin-bottom: 7px;
-		#border-bottom: 1px solid #F7F7F7;
 		padding-bottom: 7px;
+		margin-bottom: 10px;
 		.text_body {
 			font-size: 10pt
 		}
 	}
-	padding: 15px;
+	#comment_text
+	{
+		width: 500px;
+		height: 120px;
+	}
+	#post_title, #post_text, #post_link
+	{
+		width: 500px;
+	}
 }
 
 .footer {

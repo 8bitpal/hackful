@@ -2,12 +2,7 @@ class CommentsController < FilterController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @comments }
-    end
+    redirect_to "/"
   end
 
   # GET /comments/1

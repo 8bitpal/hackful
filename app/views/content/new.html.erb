@@ -6,4 +6,4 @@
 	<%= build_post_preview(post) %>
 <% end %>
 
-<span class="page_navigation"><%= link_to("< previous", "/new?page="+(@page.to_i-1).to_s) if @page > 0 %> &nbsp;&nbsp; <%= link_to("next >", "/new?page="+(@page.to_i+1).to_s) if @posts.count > 14 %></span>
+<span class="page_navigation"><%= link_to("< previous", "/new?page="+(@page.to_i-1).to_s) if @page > 0 %> &nbsp;&nbsp; <%= link_to("next >", "/new?page="+(@page.to_i+1).to_s) if @posts.count > 19 %></span>

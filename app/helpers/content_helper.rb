@@ -46,10 +46,10 @@ module ContentHelper
 				output += link_to 'Edit', edit_comment_path(comment)
 			end
 			output += "</div>"
-			output += link_to 'Comment', "#", "onClick" => "$('#comment_form_#{comment.id.to_s}').slideToggle()" if can? :create, Comment
+			output += link_to('reply', "#", "onClick" => "$('#comment_form_#{comment.id.to_s}').slideToggle(); return false", class: "comment_reply") if can? :create, Comment
 			output += "<br />"
 			output += "</div>"
-			output += "<div id='comment_form_#{comment.id.to_s}' style='display: none'>"
+			output += "<div id='comment_form_#{comment.id.to_s}' class='comment_form' style='display: none'>"
 			output += render :partial => 'comments/form', :locals => { :commentable_type => "Comment", :commentable_id => comment.id } 
 			output += "</div>"
 			output += '</div>'
@@ -82,13 +82,10 @@ module ContentHelper
 		end
 		output += "</div>"
 		if can? :create, Comment
-			output += "<div class='blue button action' style='clear: right;'>"
-			output += link_to 'Comment'.html_safe, "#", "onClick" => "$('#comment_form').slideToggle()"
+			output += '<div id="comment_form" class="comment_form" style="clear: left">'
+			output += render :partial => 'comments/form', :locals => { :commentable_type => "Post", :commentable_id => post.id }
 			output += "</div>"
 		end
-		output += '<div id="comment_form" style="display: none; clear: left">'
-		output += render :partial => 'comments/form', :locals => { :commentable_type => "Post", :commentable_id => post.id }
-		output += "</div>"
 		output += '</div></div>'
 		output
 	end
