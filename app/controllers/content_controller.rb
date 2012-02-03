@@ -10,7 +10,9 @@ class ContentController < ApplicationController
   end
   
   def about
-		respond_to.html
+		respond_to do |f|
+			f.html
+		end
   end
 
 end
