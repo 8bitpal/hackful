@@ -17,7 +17,7 @@ module ContentHelper
 		(post.link.nil? or post.link.empty?) ? (output += link_to post.title, post) : (output += link_to post.title, post.link)
 		output += "<span class='host'>"+link_to("("+URI.parse(post.link).host.gsub("www.","")+")", "http://"+URI.parse(post.link).host)+"</span>" unless post.link.nil? or post.link.empty?
 		output += "</div>"
-		output += "<div class='infobar'>"+pluralize(post.votes, "point") + " by " + post.user.name + " "+time_ago_in_words(post.created_at) + " ago | " + link_to(pluralize(comment_count(post), "comment"), post)
+		output += "<div class='infobar'>"+pluralize(post.votes, "point") + " by " + (post.user.nil? ? "[Deleted]" : post.user.name) + " "+time_ago_in_words(post.created_at) + " ago | " + link_to(pluralize(comment_count(post), "comment"), post)
 		output += "</div>"
 		output += "</div>"
 		output += "</div>"
