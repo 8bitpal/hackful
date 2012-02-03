@@ -4,11 +4,11 @@ About
 Hackful is a platform developed to power http://hackful.com, a place 
 for European entrepreneurs to share demos, stories or ask questions.
 
-Developed by @8bitpal
+Developed by  [@8bitpal](https://twitter.com/8bitpal)
  
-Idea by @rayhanrafiq and @mattslight
+Idea by [@rayhanrafiq](https://twitter.com/rayhanrafiq) and [@mattslight](https://twitter.com/mattslight]
 
-Hosting donated by incite ict
+Hosting donated by [incite ict](http://www.incite-ict.com/)
 
 Contribution
 ===
