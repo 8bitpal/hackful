@@ -7,7 +7,7 @@ module ContentHelper
 			else
 				output += "<div class='vote arrow' id='posts_"+post.id.to_s+"'>"
 			end
-			output += link_to "&#9650;".html_safe, "#", :onClick => "vote_up("+post.id.to_s+", 'posts')"
+			output += link_to "&#9650;".html_safe, "#", :onClick => "vote_up("+post.id.to_s+", 'posts'); return false"
 		else
 			output += "<div class='vote arrow'>"
 			output += link_to "&#9650;".html_safe, new_user_session_path
@@ -34,7 +34,7 @@ module ContentHelper
 				else
 					output += "<div class='vote arrow' id='comments_"+comment.id.to_s+"'>"
 				end
-				output += link_to "&#9650;".html_safe, "#", :onClick => "vote_up("+comment.id.to_s+", 'comments')"
+				output += link_to "&#9650;".html_safe, "#", :onClick => "vote_up("+comment.id.to_s+", 'comments'); return false"
 			else
 				output += "<div class='vote arrow'>"
 				output += link_to "&#9650;".html_safe, new_user_session_path
@@ -67,7 +67,7 @@ module ContentHelper
 			else
 				output += "<div class='vote arrow' id='posts_"+post.id.to_s+"'>"
 			end
-			output += link_to "&#9650;".html_safe, "#", :onClick => "vote_up("+post.id.to_s+", 'posts')"
+			output += link_to "&#9650;".html_safe, "#", :onClick => "vote_up("+post.id.to_s+", 'posts'); return false"
 		else
 			output += "<div class='vote arrow'>"
 			output += link_to "&#9650;".html_safe, new_user_session_path
