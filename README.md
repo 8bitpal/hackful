@@ -14,3 +14,8 @@ Contribution
 ===
 
 Please post feature requests or bugs as issues.
+
+Testing
+====
+
+Cucumber test cases are almost done and on the way.
