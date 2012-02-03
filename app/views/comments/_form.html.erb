@@ -15,7 +15,7 @@
     <%= f.text_area :text, :rows => 5 %>
   </div>
   <div class="field">
-		<% unless commentable_id.nil? %>
+		<% if defined? commentable_id.nil %>
 			<%= f.hidden_field :commentable_id, :value => commentable_id %>
 			<%= f.hidden_field :commentable_type, :value => commentable_type %>
     <% end %>
