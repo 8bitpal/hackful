@@ -1,3 +1,7 @@
+<% content_for :head do %>
+	<%= auto_discovery_link_tag :rss, "/frontpage.rss" %>
+<% end %>
+
 <% @posts.each do |post| %>
 	<%= build_post_preview(post) %>
 <% end %>
