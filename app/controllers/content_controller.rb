@@ -3,6 +3,17 @@ class ContentController < ApplicationController
 		params[:page].nil? ? @page = 0 : @page = params[:page].to_i
 		@posts = Post.find_by_sql ["SELECT * FROM posts ORDER BY ((posts.up_votes - posts.down_votes) -1 )/POW((((UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(posts.created_at)) / 3600 )+2), 1.5) DESC LIMIT ?, 20", (@page*20)]
 		
+		if @page==5 
+			@posts.each do |post| 
+				begin
+					logger.info post.user.name
+				rescue
+					logger.info "It's the fault of" + post.title
+				ensure
+					
+				end
+			end
+		end 
 		respond_to do |f|
 			f.html
 			f.rss { render :layout => false }
