@@ -2,9 +2,10 @@ body {
 	padding: 0px;
 	margin: 0px;
 	font: {
-		family: helvetica, ubuntu, arial, verdana, sans-serif;
-		size: 12pt;
+		family: cambria, helvetica, ubuntu, arial, verdana, sans-serif;
+		size: 1.25em;
 	}
+	letter-spacing: 0.2em;
 	div {
 		
 	}
@@ -27,7 +28,7 @@ a:visited {
 		right: 10%;
 	}
 	border-bottom: 1px solid #D9D9D9;
-  height: 40px;
+  height: 50px;
 	.title {
 		position: relative;
 		line-height: 40px;
@@ -36,19 +37,19 @@ a:visited {
 			top: 10px;
 			left: 5px;
 		}
-		font-size: 16pt;
+		font-size: 2.25em;
 		img {
 			top: 5px;
 			position: relative;
-			margin-right: 5px;
+			margin-right: 0px;
 		}
 	}
 	.navigation {
 		padding: {
-			left: 3%;
+			left: 1%;
 			top: 10%;
 		}
-		font-size: 12pt;
+		font-size: 1.15em;
 		a {
 			padding: {
 				left: 10px;
@@ -68,7 +69,7 @@ a:visited {
 		float: right;
 		padding: 10px;
 		font: {
-			size: 10pt;
+			size: 1.5em;
 			weight: bold;
 		}
 	}
@@ -87,6 +88,7 @@ a:visited {
 		left: 13%;
 		right: 13%;
 	}
+	background-color: #f9f9e7;
 	.voted a {
 		color: #E48E69;
 	}
@@ -168,7 +170,7 @@ a:visited {
 		padding-bottom: 7px;
 		margin-bottom: 10px;
 		.text_body {
-			font-size: 10pt
+			font-size: 1.15em
 		}
 	}
 	#comment_text
