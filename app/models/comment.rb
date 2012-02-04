@@ -14,6 +14,8 @@ class Comment < ActiveRecord::Base
 	
 	make_voteable
 	
+	validates :text, :length => { :minimum => 2 }, :allow_blank => false
+	
 	def root
 		commentable = self.commentable
 		while commentable.class == "Comment"

@@ -8,6 +8,7 @@ Hackful::Application.routes.draw do
   match "/frontpage" => "content#frontpage"
 
   match "/new" => "content#new"
+  match "/ask" => "content#ask"
 
   resources :comments
 

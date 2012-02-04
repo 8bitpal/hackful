@@ -5,6 +5,9 @@ class Post < ActiveRecord::Base
 	attr_accessible :commentable_type, :commentable_id, :title, :text, :link
 	
 	validates :link, :format => URI::regexp(%w(http https)), :allow_blank => true
+	validates :title, :length => { :maximum => 255 }, :allow_blank => false
+	validates :text, :length => { :minimum => 2 }, :allow_blank => false
+	
 	
 	make_voteable
 end
