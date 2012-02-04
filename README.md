@@ -6,7 +6,7 @@ for European entrepreneurs to share demos, stories or ask questions.
 
 Developed by  [@8bitpal](https://twitter.com/8bitpal)
  
-Idea by [@rayhanrafiq](https://twitter.com/rayhanrafiq) and [@mattslight](https://twitter.com/mattslight]
+Idea by [@rayhanrafiq](https://twitter.com/rayhanrafiq) and [@mattslight](https://twitter.com/mattslight)
 
 Hosting donated by [incite ict](http://www.incite-ict.com/)
 
