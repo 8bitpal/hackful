@@ -14,7 +14,7 @@
 			<% end %>
 			</div>
 			<div class='text_body'>
-				<%= markdown(comment.text) %>
+				<%= markdown(h(comment.text)) %>
 				<div class='infobar'>
 					<%= pluralize(comment.votes, "point") %> by <%= comment.user.name %> <%= time_ago_in_words(comment.created_at) %> ago &nbsp;
 					<% if can? :update, comment %>

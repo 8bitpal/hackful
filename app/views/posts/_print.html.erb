@@ -16,7 +16,7 @@
 		<% unless post.link.nil? or post.link.empty? %>
 			<span class='host'><%= link_to("("+URI.parse(post.link).host.gsub("www.","")+")", "http://"+URI.parse(post.link).host) %> </span>
 		<% end %>	
-		<p class="markup"><%= markdown(post.text) %></p>
+		<p class="markup"><%= markdown(h(post.text)) %></p>
 		<div class='infobar'><%= pluralize(post.votes, "point") %> by <%= (post.user.nil? ? "[Deleted]" : post.user.name) %> <%= time_ago_in_words(post.created_at) %> ago | <%= link_to(pluralize(comment_count(post), "comment"), post) %>
 		<% if can? :update, post %>
 			<%= link_to 'Edit', edit_post_path(post) %>
