@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+source 'http://gemcutter.org'
 
 gem 'rails', '3.1.3'
 
@@ -26,4 +27,4 @@ gem 'cancan'
 gem 'make_voteable'
 gem 'mysql2'
 gem 'rails_autolink'
-gem 'formatize'
+gem 'rdiscount'
