@@ -1,4 +1,4 @@
-<%= render :inline => print_post(@post) %>
+<%= render :partial => "posts/print", :locals => { post: @post } %>
 
-<%= render :inline => build_comments(@post) %>
+<%= render :partial => "comments/print", :locals => { commentable: @post } %>
 

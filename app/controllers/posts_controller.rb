@@ -9,11 +9,12 @@ class PostsController < FilterController
   # GET /posts/1.json
   def show
     @post = Post.find(params[:id])
+    @title = @post.title
     @parent_comments = @post.comments
 		@comment = Comment.new
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render :json => @post }
     end
   end

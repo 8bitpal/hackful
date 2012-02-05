@@ -19,6 +19,11 @@
 			<%= f.hidden_field :commentable_id, :value => commentable_id %>
 			<%= f.hidden_field :commentable_type, :value => commentable_type %>
     <% end %>
+    
+    <% if @comment.errors.any? %>
+			<%= f.hidden_field :commentable_id %>
+			<%= f.hidden_field :commentable_type %>
+    <% end %>
   </div>
      <div class="actions">
     <%= f.submit( :value => "Post Comment",  :class => "blue button" ) %>

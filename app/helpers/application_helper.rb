@@ -1,4 +1,4 @@
-module ApplicationHelper
+module ApplicationHelper	
 	def comment_count(object)
 		count = object.comments.count
 		object.comments.each do |comment|

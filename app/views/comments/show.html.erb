@@ -1,15 +1,32 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>User:</b>
-  <%= @comment.user_id %>
-</p>
-
-<p>
-  <b>Text:</b>
-  <%= @comment.text %>
-</p>
-
-
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<div class='comments_box'>
+	<% commentable.comments.each do |comment| %>
+		<div class="comment">'
+			<% if user_signed_in? %>
+				<% if current_user.voted?(post) %>
+					<div class='voted arrow' id='posts_<%= post.id.to_s %>'>
+				<% else %>
+					<div class='vote arrow' id='posts_<%= post.id.to_s %>'>
+				<% end %>
+					<%= link_to "&#9650;".html_safe, "#", :onClick => "vote_up("+post.id.to_s+", 'posts'); return false" %>
+			<% else %>
+				<div class='vote arrow'>
+				<%= link_to "&#9650;".html_safe, new_user_session_path %>
+			<% end %>
+			</div>
+			<div class='text_body'>
+			simple_format(auto_link(comment.text))
+			<div class='infobar'><%= pluralize(comment.votes, "point") %> by <%= comment.user.name %> <%= time_ago_in_words(comment.created_at) %> ago &nbsp;
+			if can? :update, comment
+				link_to 'Edit', edit_comment_path(comment)
+			end
+			</div>
+			<%= link_to('reply', "#", "onClick" => "$('#comment_form_#{comment.id.to_s}').slideToggle(); return false", class: "comment_reply") if can? :create, Comment %>
+			<br />
+			</div>
+			<div id='comment_form_#{comment.id.to_s}' class='comment_form' style='display: none'>"
+			render :partial => 'comments/form', :locals => { :commentable_type => "Comment", :commentable_id => comment.id } 
+			</div>
+			</div>
+			<%= render :partial "comments/print", comment: comment if comment.comments.count > 0 %>
+		end
+</div>"
