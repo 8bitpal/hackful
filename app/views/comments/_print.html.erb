@@ -24,7 +24,7 @@
 				<%= link_to('reply', "#", "onClick" => "$('#comment_form_#{comment.id.to_s}').slideToggle(); return false", class: "comment_reply") if can? :create, Comment %><br />
 			</div>
 			<div id='comment_form_<%= comment.id.to_s %>' class='comment_form' style='display: none'>"
-				render :partial => 'comments/form', :locals => { :commentable_type => "Comment", :commentable_id => comment.id } 
+				<%= render :partial => 'comments/form', :locals => { :commentable_type => "Comment", :commentable_id => comment.id } %>
 			</div>
 		</div>
 		<%= render :partial => "comments/print", :locals => { commentable: comment } if comment.comments.count > 0 %>
