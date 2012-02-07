@@ -15,7 +15,7 @@
 			</div>
 			<div class='text_body'>
 			simple_format(auto_link(comment.text))
-			<div class='infobar'><%= pluralize(comment.votes, "point") %> by <%= comment.user.name %> <%= time_ago_in_words(comment.created_at) %> ago &nbsp;
+			<div class='infobar'><%= pluralize(comment.votes, "point") %> by <%= link_to(comment.user.name, user_path(comment.user.name)) %> <%= time_ago_in_words(comment.created_at) %> ago &nbsp;
 			if can? :update, comment
 				link_to 'Edit', edit_comment_path(comment)
 			end

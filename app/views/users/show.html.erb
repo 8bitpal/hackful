@@ -1,0 +1,9 @@
+<h1><%= @user.name %>'s profile:</h1>
+
+<h4>Submitted Stories: <%= @user.posts.count %></h4>
+
+<% @posts.each do |post| %>
+	<%= render partial: "posts/preview", locals: { post: post } %>
+<% end %>
+
+<span class="page_navigation"><%= link_to("< previous", "/?page="+(@page.to_i-1).to_s) if @page > 0 %> &nbsp;&nbsp; <%= link_to("next >", "/?page="+(@page.to_i+1).to_s) if @posts.count > 19 %></span>
