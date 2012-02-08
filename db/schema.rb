@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,41 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120129132752) do
+ActiveRecord::Schema.define(:version => 20120208103944) do
+
+  create_table "assets", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
+  create_table "circle_accesses", :force => true do |t|
+    t.integer  "circle_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "circle_settings", :force => true do |t|
+    t.integer  "circle_id"
+    t.integer  "access_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "circles", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "description"
+    t.text     "tags"
+    t.integer  "votes_up"
+    t.integer  "votes_down"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
@@ -19,6 +54,17 @@ ActiveRecord::Schema.define(:version => 20120129132752) do
     t.string   "commentable_type"
     t.integer  "up_votes",         :default => 0, :null => false
     t.integer  "down_votes",       :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "user_id"
+    t.boolean  "unread",         :default => true
+    t.integer  "alerted_id"
+    t.string   "alerted_type"
+    t.integer  "alertable_id"
+    t.string   "alertable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

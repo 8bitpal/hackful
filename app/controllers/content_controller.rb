@@ -34,5 +34,14 @@ class ContentController < ApplicationController
 			f.html
 		end
   end
+  
+  def notifications
+		@new_notifications = current_user.notifications.where(:unread => true)
+		@old_notifications = current_user.notifications.find(:all, :conditions => { :unread => false }, :limit => 20)
+		@comment = Comment.new
+		respond_to do |f|
+			f.html
+		end
+  end
 
 end

@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 	has_many :votes, :as => :voteable
 	has_many :comments
 	has_many :posts
+	has_many :notifications, :order => "created_at DESC"
 	
 	validates_uniqueness_of :name
 	validates_format_of :name, :with => /\A[a-zA-Z0-9]+\z/i,

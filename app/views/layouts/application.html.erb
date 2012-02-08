@@ -16,7 +16,7 @@
 	<span class="navigation"><%= link_to "top", "/" %><%= link_to "new", "/new" %><%= link_to "ask", "/ask" %><%= link_to "submit", "/posts/new" %></span>
 	<span class="user">
 		<% if user_signed_in? %>
-			<%= link_to "&#9998;".html_safe, "/users/edit"%>&nbsp;<%= current_user.name %>&nbsp;&nbsp;<%= link_to('Sign out', destroy_user_session_path, :method => :delete) %>
+			<span class="icons<%= " alert" if current_user.notifications.where(:unread => true).count > 0 %>"><%= link_to "&#9993;".html_safe, "/notifications"%></span>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "&#9998;".html_safe, "/users/edit"%>&nbsp;<%= current_user.name %>&nbsp;&nbsp;<%= link_to('Sign out', destroy_user_session_path, :method => :delete) %>
 		<% else %>
 			<%= link_to('Sign in', new_user_session_path)  %>
 		<% end %>

@@ -6,6 +6,7 @@ Hackful::Application.routes.draw do
   match ":controller/:id/vote_down" => ":controller#vote_down"
   
   match "/frontpage" => "content#frontpage"
+  match "/notifications" => "content#notifications"
 
   match "/new" => "content#new"
   match "/ask" => "content#ask"
