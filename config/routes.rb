@@ -1,5 +1,7 @@
 Hackful::Application.routes.draw do
 	match "/about" => "content#about"
+    
+  match "/user/:name" => "users#show", :as => 'user'
 	
   #Voting routes
   match ":controller/:id/vote_up" => ":controller#vote_up"

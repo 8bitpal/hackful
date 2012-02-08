@@ -1,13 +1,13 @@
 <h2>Notifications</h2>
 <% @new_notifications.each do |notification| %>
 	<div class="notification new">
-		<h2><%= notification.alertable.user.name %> replied to your <%= notification.alerted.class.name %></h2>
+		<h2><%= link_to(notification.alertable.user.name, user_path(notification.alertable.user.name)) %> replied to your <%= notification.alerted.class.name %></h2>
 		<%= render :partial => "comments/show", :locals => { comment: notification.alertable } %>
 	</div>
 <% end %>
 <% @old_notifications.each do |notification| %>
 	<div class="notification">
-		<h2><%= notification.alertable.user.name %> replied to your <%= notification.alerted.class.name %></h2>
+		<h2><%= link_to(notification.alertable.user.name, user_path(notification.alertable.user.name)) %> replied to your <%= notification.alerted.class.name %></h2>
 		<%= render :partial => "comments/show", :locals => { comment: notification.alertable } %>
 	</div>
 <% end %>

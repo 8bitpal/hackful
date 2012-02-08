@@ -1,6 +1,6 @@
 <div class='comments_box'>
 	<% commentable.comments.each do |comment| %>
-		<%= render :partial => "comments/show", :locals => { comment: comment }
+		<%= render :partial => "comments/show", :locals => { comment: comment } %>
 		<%= render :partial => "comments/print", :locals => { commentable: comment } if comment.comments.count > 0 %>
 	<% end %>
 </div>
