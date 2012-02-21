@@ -1,5 +1,40 @@
 Hackful::Application.routes.draw do
-	match "/about" => "content#about"
+	
+  # /api/<request>
+  scope 'api' do
+
+    # /api/v1/<request>
+    scope 'v1' do
+      devise_for :users, :controllers => {:sessions => 'api/v1/sessions'}, :path => "sessions", :only => :sessions
+
+      match 'signup' => 'api/v1/users#signup', via: :post
+      
+      match 'users/:name' => 'api/v1/users#show', via: :get
+      match 'users/:name' => 'api/v1/users#update', via: :put
+      
+      match 'posts/frontpage' => 'api/v1/posts#frontpage', via: :get
+      match 'posts/frontpage/page/:page' => 'api/v1/posts#frontpage', via: :get
+      
+      match 'posts/new' => 'api/v1/posts#new', via: :get
+      match 'posts/new/page/:page' => 'api/v1/posts#new', via: :get
+      
+      match 'posts/ask' => 'api/v1/posts#ask', via: :get
+      match 'posts/ask/page/:page' => 'api/v1/posts#ask', via: :get
+
+      match 'posts' => 'api/v1/posts#create', via: :post
+      match 'posts/:id' => 'api/v1/posts#show', via: :get
+      match 'posts/:id/comments' => 'api/v1/posts#show_comments', via: :get
+      match 'posts/:id/vote' => 'api/v1/posts#vote', via: :put
+
+      # TODO: 404 error
+      match '*a' => 'api/v1/base_api#render_404'
+    end
+
+    # TODO: 404 error
+    match '*a' => 'api/v1/base_api#render_404'
+  end
+
+  match "/about" => "content#about"
     
   match "/user/:name" => "users#show", :as => 'user'
 	

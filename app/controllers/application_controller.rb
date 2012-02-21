@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :meta_defaults
 
   def meta_defaults
-		@title = ""
+	@title = ""
     @meta_keywords = "Europe, Startups, Entrepreneurs"
     @meta_description = "Hackful Europe is a place for European entrepreneurs to share demos, stories or ask questions."
   end

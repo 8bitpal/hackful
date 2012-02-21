@@ -11,41 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120208103944) do
-
-  create_table "assets", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "document_file_name"
-    t.string   "document_content_type"
-    t.integer  "document_file_size"
-    t.datetime "document_updated_at"
-  end
-
-  create_table "circle_accesses", :force => true do |t|
-    t.integer  "circle_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "circle_settings", :force => true do |t|
-    t.integer  "circle_id"
-    t.integer  "access_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "circles", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.text     "description"
-    t.text     "tags"
-    t.integer  "votes_up"
-    t.integer  "votes_down"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20120219131606) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
@@ -97,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20120208103944) do
     t.integer  "down_votes",             :default => 0,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "authentication_token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
