@@ -1,30 +1,36 @@
-class Api::V1::PostsController < Api::V1::BaseApiController
-  #prepend_before_filter :require_no_authentication, :only => [:show, :show_comments, :frontpage, :new, :ask]
-  before_filter :authenticate_user!, => :only => [:create, :vote]
+class Api::V1::PostsController < Api::ApplicationController
+  #prepend_before_filter :require_no_authentication, :only => [:show]
+  before_filter :authenticate_user!, :except => [:show]
+  #before_filter warden.custom_failure!
 
-  # POST /posts
+  # GET /post/:id
+  def show
+    post = Post.find(params[:id])
+    if post.nil? then raise ActiveRecord::RecordNotFound end
+    
+    comments = post.comments
+    
+    render :json => { :success => true, :post => post }, :status => 200
+  end
+
+  # POST /post
   def create
-    @post = Post.new(params[:post])
-    @post.user_id = current_user.id
+    if user_signed_in? then
+      @post = Post.new(params[:post])
+      @post.user_id = current_user.id
 
-    if @post.save
-	  current_user.up_vote!(@post)
-      render :json => @post, :status => :created, :location => @post
+      if @post.save
+        current_user.up_vote!(@post)
+        render :json => @post, :status => :created, :location => @post
+      else
+        render :json => @post.errors, :status => :unprocessable_entity
+      end
     else
-      render :json => @post.errors, :status => :unprocessable_entity
+      render :json => {:success => false, :message => "Please login"}, :status => 401
     end
   end
 
-  # GET /posts
-  def show
-  	puts 'hello'
-    @post = Post.find(params[:id])
-    @parent_comments = @post.comments
-
-    render :json => @post
-  end
-
-  # GET /posts/:id/comments
+  # GET /post/:id/comments
   def show_comments
   	@post = Post.find(params[:id])
     @parent_comments = @post.comments
@@ -32,7 +38,7 @@ class Api::V1::PostsController < Api::V1::BaseApiController
     render :json => @post.comments
   end
 
-  # PUT /posts/:id/vote
+  # PUT /post/:id/vote
   def vote
     if current_user.nil? then
       render :json => {:success => false, :message => "Please login"}, :status => 401

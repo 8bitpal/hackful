@@ -1,53 +1,56 @@
-class Api::V1::UsersController < Api::V1::BaseApiController
-  before_filter :authenticate_user!, :except => [:login, :signup]
+class Api::V1::UsersController < Api::ApplicationController
+  prepend_before_filter :require_no_authentication, :only => [:signup]
+  before_filter :parse_body_json, only: [:update, :signup]
 
   # GET /api/v1/users/:name   
   def show
-  	@user = User.find_by_name(params[:name].to_s)
-    params[:page].nil? ? @page = 0 : @page = params[:page].to_i
-    @posts = Post.find_by_sql ["SELECT * FROM posts WHERE user_id = #{@user.id} ORDER BY ((posts.up_votes - posts.down_votes) -1 )/POW((((UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(posts.created_at)) / 3600 )+2), 1.5) DESC LIMIT ?, 20", (@page*20)]		
-  	
-  	# TODO: Email address only for registred users and loged in ?
-    render :json => { :name => @user.name, :posts => @posts }
+    page = params[:page].to_i
+    name = params[:name].to_s
+    user = User.find_by_name(name)
+    if user.nil? then raise ActiveRecord::RecordNotFound end
+
+    posts = Post.find_ordered(user.id, page)
+  	if page.nil? or page < 1 then page = 1 end
+    # TODO: Email address only for registred users and loged in ?
+    user_json = {:name => user.name, :posts => posts, :page => page}
+    user_json[:email] = user.email if user_signed_in?
+    
+    render :json => user_json
   end
   
   # PUT /api/v1/users/:name
   def update
-  	# TODO:
-  end
- 
-  # POST /api/v1/login
-  def login
-  	user = User.find_for_database_authentication(:email=>params[:user_login][:email])
-    return invalid_login_attempt unless user
-    
-    if user.valid_password?(params[:user_login][:password])
-      sign_in("user", user)
-      render :json=> { :success=>true, :auth_token=>user.authentication_token, :login=>user.name, :email=>user.email }
-      return
+    puts @params
+    raise "NotLogedIn"  unless user_signed_in?
+    raise "NoParameter" if @params["user"].blank?
+      
+    user = User.find(current_user.id)
+    if user.update_attributes(params[:user])
+      puts success_message("Successfully updated user")
+      render :json => success_message("Successfully updated user")
+    else
+      puts failure_message("Couldn't update user")
+      render :json => failure_message("Couldn't update user"), :status => 422
     end
-    invalid_login_attempt
-  end
-
-  # PUT /api/v1/logout
-  def logout
-  	sign_out(resource_name)
   end
   
   # POST /api/v1/signup
   def signup
-  	# TODO:
-  end
-
-  protected
-  def ensure_params_exist
-    return unless params[:user_login].blank?
-    render :json=>{:success=>false, :message=>"missing user_login parameter"}, :status=>422
-  end
-
-  def invalid_login_attempt
-    warden.custom_failure!
-    render :json=> {:success=>false, :message=>"Error with your login or password"}, :status=>401
+    user = User.new(params[:user])
+    user.reset_authentication_token!
+    if user.save
+      user_json = {:user => {
+        :name => user.name, 
+        :email => user.email, 
+        :auth_token => user.authentication_token
+      }}
+      respond_with success_message("Sign up was successful", user_json), 
+        :status => 201
+    else
+      warden.custom_failure!
+      errors = {:errors => user.errors}
+      respond_with failure_message("Couldn't sign up user"), :status => 422
+    end
   end
 
 end
