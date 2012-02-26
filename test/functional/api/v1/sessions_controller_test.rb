@@ -1,7 +1,20 @@
 require 'test_helper'
 
-class Api::V1::PostsControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class Api::V1::SessionsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
+  def setup
+    @comment = comments(:first)
+    @post = posts(:first)
+    @user = users(:david)
+    @user.reset_authentication_token!
+  end
+
+  def teardown
+    @comemnt = nil
+    @post = nil
+    @user = nil
+  end
+
+  
 end

@@ -35,17 +35,26 @@ Hackful::Application.routes.draw do
       
       match 'posts/frontpage'             => 'api/v1/posts#frontpage', via: :get
       match 'posts/frontpage/page/:page'  => 'api/v1/posts#frontpage', via: :get
-      
       match 'posts/new'                   => 'api/v1/posts#new', via: :get
       match 'posts/new/page/:page'        => 'api/v1/posts#new', via: :get
-      
       match 'posts/ask'                   => 'api/v1/posts#ask', via: :get
       match 'posts/ask/page/:page'        => 'api/v1/posts#ask', via: :get
 
       match 'post'                        => 'api/v1/posts#create', via: :post
+      match 'post/:id'                    => 'api/v1/posts#update', via: :put
+      match 'post/:id'                    => 'api/v1/posts#destroy', via: :delete
       match 'post/:id'                    => 'api/v1/posts#show', :via => :get
-      match 'post/:id/comments'           => 'api/v1/posts#show_comments', via: :get
-      match 'post/:id/vote'               => 'api/v1/posts#vote', via: :put
+      match 'post/:id/upvote'             => 'api/v1/posts#up_vote', via: :put
+      match 'post/:id/downvote'           => 'api/v1/posts#down_vote', via: :put
+
+      match 'comments/user/:name'         => 'api/v1/comments#show_user_comments', via: :get
+      match 'comments/post/:id'           => 'api/v1/comments#show_post_comments', via: :get
+      match 'comment/:id'                 => 'api/v1/comments#show', via: :get
+      match 'comment/:id/upvote'          => 'api/v1/comments#up_vote', via: :put
+      match 'comment/:id/downvote'        => 'api/v1/comments#down_vote', via: :put
+      match 'comment'                     => 'api/v1/comments#create', via: :post
+      match 'comment/:id'                 => 'api/v1/comments#update', via: :put
+      match 'comment/:id'                 => 'api/v1/comments#destroy', via: :delete
     end
 
     # API call json 404 error

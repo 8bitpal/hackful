@@ -1,18 +1,18 @@
 class Api::V1::UsersController < Api::ApplicationController
   prepend_before_filter :require_no_authentication, :only => [:signup]
-  before_filter :parse_body_json, only: [:update, :signup]
 
-  # GET /api/v1/users/:name   
+  # GET /api/v1/users/:name(/:page)
   def show
-    page = params[:page].to_i
-    name = params[:name].to_s
-    user = User.find_by_name(name)
-    if user.nil? then raise ActiveRecord::RecordNotFound end
+    #page = page(params[:page])
+    user = User.find_by_name(params[:name])
+    raise ActiveRecord::RecordNotFound if user.nil?
 
+    # TODO: find_all_posts
     posts = Post.find_ordered(user.id, page)
-  	if page.nil? or page < 1 then page = 1 end
+  	
+    # user_json = {:name => user.name, :posts => posts, :page => page}
+    user_json = {:name => user.name}
     # TODO: Email address only for registred users and loged in ?
-    user_json = {:name => user.name, :posts => posts, :page => page}
     user_json[:email] = user.email if user_signed_in?
     
     render :json => user_json

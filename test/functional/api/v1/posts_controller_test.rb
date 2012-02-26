@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'rest_client'
 
 class Api::V1::PostsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
@@ -103,20 +102,20 @@ class Api::V1::PostsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  # test "update a post without json format" do
-  #   put "update", 
-  #     :id => @post.id, 
-  #     :auth_token => @user.authentication_token, 
-  #     :post => {:link => "http://example.com/hackful/"}
+  test "update a post without json format" do
+    put "update", 
+      :id => @post.id, 
+      :auth_token => @user.authentication_token, 
+      :post => {:link => "http://example.com/hackful/"}
     
-  #   updated_post = Post.find(@post.id)
-  #   assert !updated_post.nil?
-  #   assert_equal @post.title, updated_post.title
-  #   assert_equal "http://example.com/hackful/", updated_post.link
-  #   assert_equal @post.text, updated_post.text
-  #   assert_equal @user.id, updated_post.user.id
-  #   assert_response :success
-  # end
+    updated_post = Post.find(@post.id)
+    assert !updated_post.nil?
+    assert_equal @post.title, updated_post.title
+    assert_equal "http://example.com/hackful/", updated_post.link
+    assert_equal @post.text, updated_post.text
+    assert_equal @user.id, updated_post.user.id
+    assert_response :success
+  end
 
   test "destroy a post" do
     delete "destroy", 
@@ -274,7 +273,7 @@ class Api::V1::PostsControllerTest < ActionController::TestCase
 
   def vote_post(user, post)
     user.up_vote(post)
-    post.save
+    #post.save
   end
 end
 

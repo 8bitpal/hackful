@@ -1,83 +1,103 @@
 class Api::V1::PostsController < Api::ApplicationController
-  #prepend_before_filter :require_no_authentication, :only => [:show]
   before_filter :authenticate_user!, :except => [:show]
-  #before_filter warden.custom_failure!
+  before_filter :check_login, only: [:up_vote, :down_vote, :create, :edit, :destroy]
 
   # GET /post/:id
   def show
     post = Post.find(params[:id])
-    if post.nil? then raise ActiveRecord::RecordNotFound end
+    raise ActiveRecord::RecordNotFound if post.nil?
     
-    comments = post.comments
+    render :json => post
+  end
+
+  # PUT /post/:id/vote
+  def up_vote
+    post = Post.find(params[:id])
+    raise ActiveRecord::RecordNotFound if post.nil?
     
-    render :json => { :success => true, :post => post }, :status => 200
+    current_user.up_vote(post)
+    #post.save
+    
+    render :json => success_message("Successfully voted up post")
+  end
+
+  # PUT /post/:id/unvote
+  def down_vote
+    post = Post.find(params[:id])
+    raise ActiveRecord::RecordNotFound if post.nil?
+    
+    current_user.down_vote(post)
+    #post.save
+    
+    render :json => success_message("Successfully voted down post")
   end
 
   # POST /post
   def create
-    if user_signed_in? then
-      @post = Post.new(params[:post])
-      @post.user_id = current_user.id
+    return not_loged_in unless user_signed_in?
+    
+    post = Post.new(params["post"])
+    post.user_id = current_user.id
 
-      if @post.save
-        current_user.up_vote!(@post)
-        render :json => @post, :status => :created, :location => @post
-      else
-        render :json => @post.errors, :status => :unprocessable_entity
-      end
+    if post.save
+      current_user.up_vote!(post)
+
+      status = :created #:location => post
+      response = post
     else
-      render :json => {:success => false, :message => "Please login"}, :status => 401
+      status = :unprocessable_entity
+      errors = {:errors => post.errors}
+      response = failure_message("Couldn't create post", errors)
     end
+
+    render :json => response, :status => status
   end
 
-  # GET /post/:id/comments
-  def show_comments
-  	@post = Post.find(params[:id])
-    @parent_comments = @post.comments
-
-    render :json => @post.comments
-  end
-
-  # PUT /post/:id/vote
-  def vote
-    if current_user.nil? then
-      render :json => {:success => false, :message => "Please login"}, :status => 401
-      return
-    end
+  # PUT /post/:id
+  def update
     post = Post.find(params[:id])
-    if post.nil? then
-      render :json => {:success => false, :message => "Couldn't find post with id #{params[:id]}"}, :status => 401
-      return
+    raise ActiveRecord::RecordNotFound if post.nil?
+    raise "NoPermission" unless is_own_post?(post)
+    
+    if post.update_attributes(params["post"])
+      #head :ok
+      render :json => {:post => post, :params => params}
+    else
+      failure = failure_message("Couldn't update user", {:errors => post.errors})
+      render :json => failure, :status => :unprocessable_entity
     end
-    current_user.up_vote(post)
-    render :json => {:success => true, :message => "Successfully voted up"}, :status => 200
+  end
+
+  # DELETE /post/:id
+  def destroy
+    post = Post.find(params[:id])
+    raise ActiveRecord::RecordNotFound if post.nil?
+    raise "NoPermission" unless is_own_post?(post)
+
+    post.destroy
+    head :ok
   end
 
   # GET /posts/frontpage
   # GET /posts/frontpage/page/:page
   def frontpage
-    (params[:page].nil? or params[:page].to_i < 1) ? @page = 1 : @page = params[:page].to_i
-    offset = ((@page-1)*20)
-    @posts = Post.find_by_sql ["SELECT * FROM posts ORDER BY ((posts.up_votes - posts.down_votes) -1 )/POW((((UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(posts.created_at)) / 3600 )+2), 1.5) DESC LIMIT ?, 20", offset]
-    render :json => @posts
+    render :json => Post.find_frontpage(page_num(params[:page]))
   end
 
   # GET /posts/new
   # GET /posts/new/page/:page
   def new
-    (params[:page].nil? or params[:page].to_i < 1) ? @page = 1 : @page = params[:page].to_i
-    offset = ((@page-1)*20)
-    @posts = Post.find(:all, :order => "created_at DESC", :limit => 20, :offset => offset)
-    render :json => @posts
+    render :json => Post.find_new(page_num(params[:page]))
   end
   
   # GET /posts/ask
   # GET /posts/ask/page/:page
   def ask
-  	(params[:page].nil? or params[:page].to_i < 1) ? @page = 1 : @page = params[:page].to_i
-    offset = ((@page-1)*20)
-    @posts = Post.find_by_sql ["SELECT * FROM posts WHERE posts.link = '' ORDER BY ((posts.up_votes - posts.down_votes) -1 )/POW((((UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(posts.created_at)) / 3600 )+2), 1.5) DESC LIMIT ?, 20", offset]
-    render :json => @posts
+    render :json => Post.find_ask(page_num(params[:page]))
   end
 
+  private
+  def is_own_post?(post)
+    return post.user.eql? current_user
+  end
 end

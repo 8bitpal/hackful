@@ -6,6 +6,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   
   prepend_before_filter :require_no_authentication, :only => [:create]
   before_filter :set_format
+  before_filter :check_login, only: :destroy
   before_filter :parse_body_json, only: :create
   before_filter :authenticate_user!
   
@@ -43,12 +44,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   end
 
   def destroy
-  	puts "user_signed_in?: #{user_signed_in?}"
-  	unless user_signed_in? then
-		  return render :json => failure_message("Please log in"), :status => 401
-    end
-
-    puts current_user.email
+  	puts current_user.email
     current_user.authentication_token = nil
     current_user.save
     render :json => success_message("Successfully logged out")
