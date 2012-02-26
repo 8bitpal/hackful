@@ -1,16 +1,11 @@
 class Api::V1::UsersController < Api::ApplicationController
-  prepend_before_filter :require_no_authentication, :only => [:signup]
+  before_filter :check_login, only: :update
 
-  # GET /api/v1/users/:name(/:page)
+  # GET /api/v1/user/:id
   def show
-    #page = page(params[:page])
-    user = User.find_by_name(params[:name])
+    user = User.find(params[:id])
     raise ActiveRecord::RecordNotFound if user.nil?
-
-    # TODO: find_all_posts
-    posts = Post.find_ordered(user.id, page)
-  	
-    # user_json = {:name => user.name, :posts => posts, :page => page}
+    
     user_json = {:name => user.name, :id => user.id}
     # TODO: Email address only for registred users and loged in ?
     user_json[:email] = user.email if user_signed_in?
@@ -18,19 +13,20 @@ class Api::V1::UsersController < Api::ApplicationController
     render :json => user_json
   end
   
-  # PUT /api/v1/users/:name
+  # PUT /api/v1/user
   def update
-    puts @params
-    raise "NotLogedIn"  unless user_signed_in?
-    raise "NoParameter" if @params["user"].blank?
-      
+    raise Api::BasicApi::NoParameter if params["user"].blank?
+    
+    #return render :json => params
+    #return render :json => {:id => current_user.id, :signed_in => user_signed_in?}
+
     user = User.find(current_user.id)
     if user.update_attributes(params[:user])
-      puts success_message("Successfully updated user")
       render :json => success_message("Successfully updated user")
     else
-      puts failure_message("Couldn't update user")
-      render :json => failure_message("Couldn't update user"), :status => 422
+      errors = {:errors => user.errors}
+      render :json => failure_message("Couldn't update user", errors), 
+        :status => 422
     end
   end
   
@@ -44,12 +40,12 @@ class Api::V1::UsersController < Api::ApplicationController
         :email => user.email, 
         :auth_token => user.authentication_token
       }}
-      respond_with success_message("Sign up was successful", user_json), 
+      render :json => success_message("Sign up was successful", user_json), 
         :status => 201
     else
-      warden.custom_failure!
       errors = {:errors => user.errors}
-      respond_with failure_message("Couldn't sign up user"), :status => 422
+      render :json => failure_message("Couldn't sign up user", errors),
+        :status => 422
     end
   end
 

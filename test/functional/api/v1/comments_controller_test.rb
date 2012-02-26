@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class Api::V1::CommentsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
-  fixtures :all
-
   def setup
     @comment = comments(:first)
     @post = posts(:first)

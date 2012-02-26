@@ -2,8 +2,6 @@ require 'test_helper'
 require 'rest_client'
 
 class Api::V1::PostsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
-
   def setup
     @post = posts(:first)
     @user = users(:david)

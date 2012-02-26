@@ -1,6 +1,7 @@
 require 'action_controller'
 module Api::BasicApi
   class NotLogedIn < StandardError; end
+  class NoParameter < StandardError; end
 
   def not_found
     head :not_found
@@ -30,8 +31,10 @@ module Api::BasicApi
     return json
   end
 
-  def failure_message(message)
-    return {:success => false, :message => message}
+  def failure_message(message, errors = nil)
+    json = {:success => false, :message => message}
+    json.merge! errors unless errors.nil?  
+    return json
   end
 
   def check_login

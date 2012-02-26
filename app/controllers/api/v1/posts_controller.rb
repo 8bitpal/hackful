@@ -1,5 +1,5 @@
 class Api::V1::PostsController < Api::ApplicationController
-  before_filter :authenticate_user!, :except => [:show, :frontpage, :ask, :new]
+  #before_filter :authenticate_user!, :except => [:show, :frontpage, :ask, :new]
   before_filter :check_login, only: [:up_vote, :down_vote, :create, :edit, :destroy]
 
   # GET /post/:id
@@ -8,6 +8,14 @@ class Api::V1::PostsController < Api::ApplicationController
     raise ActiveRecord::RecordNotFound if post.nil?
     
     render :json => post
+  end
+
+  # GET /posts/user/:id(/:page)
+  def show_user_posts
+    user = User.find(params[:id])
+    posts = Post.find_user_posts(user, page_num(params[:page]))
+    
+    render :json => posts
   end
 
   # PUT /post/:id/vote
@@ -78,20 +86,17 @@ class Api::V1::PostsController < Api::ApplicationController
     head :ok
   end
 
-  # GET /posts/frontpage
-  # GET /posts/frontpage/page/:page
+  # GET /posts/frontpage(/:page)
   def frontpage
     return render :json => Post.find_frontpage(page_num(params[:page]))
   end
 
-  # GET /posts/new
-  # GET /posts/new/page/:page
+  # GET /posts/new(/:page)
   def new
     return render :json => Post.find_new(page_num(params[:page]))
   end
   
-  # GET /posts/ask
-  # GET /posts/ask/page/:page
+  # GET /posts/ask(/:page)
   def ask
     return render :json => Post.find_ask(page_num(params[:page]))
   end
