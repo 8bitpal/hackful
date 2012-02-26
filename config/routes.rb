@@ -30,20 +30,18 @@ Hackful::Application.routes.draw do
 
       match 'signup'                      => 'api/v1/users#signup', via: :post
       
-      match 'user/:name'                  => 'api/v1/users#show', via: :get
-      match 'user/:name'                  => 'api/v1/users#update', via: :put
+      match 'user/:id'                  => 'api/v1/users#show', via: :get
+      match 'user'                  => 'api/v1/users#update', via: :put
       
-      match 'posts/frontpage'             => 'api/v1/posts#frontpage', via: :get
-      match 'posts/frontpage/page/:page'  => 'api/v1/posts#frontpage', via: :get
-      match 'posts/new'                   => 'api/v1/posts#new', via: :get
-      match 'posts/new/page/:page'        => 'api/v1/posts#new', via: :get
-      match 'posts/ask'                   => 'api/v1/posts#ask', via: :get
-      match 'posts/ask/page/:page'        => 'api/v1/posts#ask', via: :get
+      match 'posts/frontpage(/:page)'     => 'api/v1/posts#frontpage', via: :get
+      match 'posts/new(/:page)'           => 'api/v1/posts#new', via: :get
+      match 'posts/ask(/:page)'           => 'api/v1/posts#ask', via: :get
 
       match 'post'                        => 'api/v1/posts#create', via: :post
       match 'post/:id'                    => 'api/v1/posts#update', via: :put
       match 'post/:id'                    => 'api/v1/posts#destroy', via: :delete
       match 'post/:id'                    => 'api/v1/posts#show', :via => :get
+      match 'posts/user/:id(/:page)'              => 'api/v1/posts#show_user_posts', :via => :get
       match 'post/:id/upvote'             => 'api/v1/posts#up_vote', via: :put
       match 'post/:id/downvote'           => 'api/v1/posts#down_vote', via: :put
 

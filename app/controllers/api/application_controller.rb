@@ -11,6 +11,5 @@ class Api::ApplicationController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from Api::BasicApi::NotLogedIn, with: :not_loged_in
   rescue_from Api::BasicApi::NoParameter, with: :no_parameter_found
-  # rescue_from Exception do |exception| internal_server_error(exception) end
 
 end
