@@ -1,16 +1,22 @@
 require 'test_helper'
 require 'rest_client'
 
-class Api::V1::SessionsControllerTest < ActionController::TestCase
-  #include Devise::TestHelpers
+class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
+  fixtures :all
+  
+  PASSWORD = "test123"
 
   def setup
     @comment = comments(:first)
     @post = posts(:first)
-    @user = users(:david)
+    @user = User.new({
+      :name => "David Johnson",
+      :email => "david.johnson@example.com",
+      :password => PASSWORD,
+      :password_confirmation => PASSWORD
+    })
     @user.reset_authentication_token!
-    @user.password = "test123"
-    @user.password_confirmation = "test123"
+    #@user.reset_password("test123", "test123")
     @user.save
   end
 
@@ -21,15 +27,13 @@ class Api::V1::SessionsControllerTest < ActionController::TestCase
   end
 
   test "login and recieve auth_token" do
-    #post "create", :format => :json, :user => {:email => @user.email, :password => @user.password}
+    post "/api/v1/sessions/login", 
+      :format => :json, 
+      :user => {:email => @user.email, :password => "test123"}
     
-    response_str = RestClient.post "http://localhost:3000/api/v1/sessions/login", 
-      {:user => {:email => @user.email, :password => @user.password}}.to_json, 
-      :content_type => :json, 
-      :accept => :json
+    session_json = JSON.parse(response.body)
 
-    session_json = JSON.parse(response_str)
-
+    @user = User.find_by_email(@user.email)
     assert_equal @user.email, session_json["email"]
     assert_equal @user.name, session_json["name"]
     assert_equal @user.authentication_token, session_json["auth_token"]
@@ -37,7 +41,7 @@ class Api::V1::SessionsControllerTest < ActionController::TestCase
   end
 
   test "try to login and fail" do
-    post "create", 
+    post "/api/v1/sessions/login",
       :format => :json, 
       :user => {:email => @user.email, :password => "WRONG PASSWORD"}
     session_json = JSON.parse(response.body)
@@ -47,15 +51,15 @@ class Api::V1::SessionsControllerTest < ActionController::TestCase
   end
 
   test "logout with existing token" do
-    post "create", 
+    post "/api/v1/sessions/login",
       :format => :json, 
-      :user => {:email => @user.email, :password => @user.password}
+      :user => {:email => @user.email, :password => "test123"}
     
     session_json = JSON.parse(response.body)
     auth_token = session_json["auth_token"]
     assert !auth_token.nil?
 
-    delete "destroy", :format => :json, :auth_token => auth_token
+    delete "/api/v1/sessions/logout", :format => :json, :auth_token => auth_token
     destroy_session_json = JSON.parse(response.body)
 
     assert destroy_session_json["success"]
@@ -63,18 +67,11 @@ class Api::V1::SessionsControllerTest < ActionController::TestCase
   end
 
   test "try to logout with expired token" do
-    post "create", 
-      :format => :json, 
-      :user => {:email => @user.email, :password => @user.password}
+    auth_token = "51nLGdjsBcB2PUrudx2s"
     
-    session_json = JSON.parse(response.body)
-    auth_token = session_json["auth_token"]
-    assert !auth_token.nil?
+    delete "/api/v1/sessions/logout", :format => :json, :auth_token => auth_token
+    destroy_session_json = JSON.parse(response.body)
     
-    @user.reset_authentication_token!
-      
-    delete "destroy", :format => :json, :auth_token => auth_token
-
     assert !destroy_session_json["success"]
     assert_response 401
   end

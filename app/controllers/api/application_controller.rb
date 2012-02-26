@@ -9,6 +9,7 @@ class Api::ApplicationController < ApplicationController
   rescue_from ActionController::UnknownAction, :with => :unknown_action
   rescue_from ActionController::RoutingError, :with => :route_not_found
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from Api::BasicApi::NotLogedIn, with: :not_loged_in
   
   # # FIXME: Should be removed in production
   rescue_from Exception do |exception|

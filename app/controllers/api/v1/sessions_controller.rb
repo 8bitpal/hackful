@@ -7,32 +7,25 @@ class Api::V1::SessionsController < Devise::SessionsController
   prepend_before_filter :require_no_authentication, :only => [:create]
   before_filter :set_format
   before_filter :check_login, only: :destroy
-  before_filter :parse_body_json, only: :create
   before_filter :authenticate_user!
   
-  rescue_from Exception, with: :internal_server_error
+  rescue_from Exception do |exception| internal_server_error(exception) end
   rescue_from ActionController::UnknownAction, :with => :unknown_action
   rescue_from ActionController::RoutingError, :with => :route_not_found
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from Api::BasicApi::NotLogedIn, with: :not_loged_in
   
-  # # FIXME: Should be removed in production
-  rescue_from Exception do |exception|
-    error = { :error      => "internal server error", 
-              :exception  => exception.message, 
-              :stacktrace => exception.backtrace }
-    render :json => error, :status => 500
-  end
 
   def create
     build_resource
-    email = @params["user"]["email"]
-    password = @params["user"]["password"]
+    email = params["user"]["email"]
+    password = params["user"]["password"]
     resource = User.find_for_database_authentication(:email => email)
     return invalid_login_attempt unless resource
     return invalid_login_attempt unless resource.valid_password?(password)
      
     sign_in("user", resource)
-    puts "signed_in?: #{signed_in?}"
+    #puts "signed_in?: #{signed_in?}"
     resource.reset_authentication_token!
 
     token_json = {
@@ -44,8 +37,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   end
 
   def destroy
-  	puts current_user.email
-    current_user.authentication_token = nil
+  	current_user.authentication_token = nil
     current_user.save
     render :json => success_message("Successfully logged out")
   end

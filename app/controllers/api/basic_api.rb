@@ -1,17 +1,19 @@
 require 'action_controller'
 module Api::BasicApi
+  class NotLogedIn < StandardError; end
+
   def not_found
     head :not_found
   end
 
-  def internal_server_error
-    head 500
-    #error = { 
-    #  :error => "internal server error", 
-    #  :exception => exception.message, 
-    #  :stacktrace => exception.backtrace 
-    #}
-    #render :json => error, :status => 500
+  def internal_server_error(exception = nil)
+    #head 500
+    error = { 
+     :error => "internal server error", 
+     :exception => exception.message, 
+     :stacktrace => exception.backtrace 
+    }
+    render :json => error, :status => 500
   end
 
   def no_parameter_found
@@ -33,7 +35,7 @@ module Api::BasicApi
   end
 
   def check_login
-    raise "NotLogedIn" unless user_signed_in?
+    raise NotLogedIn unless user_signed_in?
   end
 
   def page_num(num = nil)
