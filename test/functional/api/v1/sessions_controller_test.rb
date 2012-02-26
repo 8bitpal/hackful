@@ -16,5 +16,16 @@ class Api::V1::SessionsControllerTest < ActionController::TestCase
     @user = nil
   end
 
+  test "login and recieve auth_token" do
+  end
+
+  test "try to login and fail" do
+  end
+
+  test "logout with existing token" do
+  end
+
+  test "try to logout with expired token" do
+  end
   
 end

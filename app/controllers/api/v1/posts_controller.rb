@@ -1,5 +1,5 @@
 class Api::V1::PostsController < Api::ApplicationController
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:show, :frontpage, :ask, :new]
   before_filter :check_login, only: [:up_vote, :down_vote, :create, :edit, :destroy]
 
   # GET /post/:id
@@ -81,19 +81,19 @@ class Api::V1::PostsController < Api::ApplicationController
   # GET /posts/frontpage
   # GET /posts/frontpage/page/:page
   def frontpage
-    render :json => Post.find_frontpage(page_num(params[:page]))
+    return render :json => Post.find_frontpage(page_num(params[:page]))
   end
 
   # GET /posts/new
   # GET /posts/new/page/:page
   def new
-    render :json => Post.find_new(page_num(params[:page]))
+    return render :json => Post.find_new(page_num(params[:page]))
   end
   
   # GET /posts/ask
   # GET /posts/ask/page/:page
   def ask
-    render :json => Post.find_ask(page_num(params[:page]))
+    return render :json => Post.find_ask(page_num(params[:page]))
   end
 
   private
