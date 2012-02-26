@@ -1,6 +1,5 @@
 class Api::V1::PostsController < Api::ApplicationController
-  #before_filter :authenticate_user!, :except => [:show, :frontpage, :ask, :new]
-  before_filter :check_login, only: [:up_vote, :down_vote, :create, :edit, :destroy]
+  before_filter :check_login, only: [:up_vote, :down_vote, :create, :update, :destroy]
 
   # GET /post/:id
   def show
@@ -42,16 +41,13 @@ class Api::V1::PostsController < Api::ApplicationController
 
   # POST /post
   def create
-    return not_loged_in unless user_signed_in?
-    
     post = Post.new(params["post"])
     post.user_id = current_user.id
 
     if post.save
       current_user.up_vote!(post)
-
-      status = :created #:location => post
-      response = post
+      status = :created
+      response = success_message("Successfully created post")
     else
       status = :unprocessable_entity
       errors = {:errors => post.errors}

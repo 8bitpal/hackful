@@ -38,6 +38,13 @@ class Api::V1::PostsControllerTest < ActionController::TestCase
     assert_equal 1, Post.find(@post.id).up_votes
   end
 
+  test "try to vote a post without beign logged in" do
+    put "up_vote", :format => :json, :id => @post.id
+    
+    assert_response 401
+    assert_equal 0, Post.find(@post.id).up_votes
+  end
+
   test "down vote a post" do
     assert_equal 0, @post.up_votes
     vote_post(@user, @post)
@@ -47,6 +54,17 @@ class Api::V1::PostsControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_equal 0, Post.find(@post.id).up_votes
+  end
+
+  test "try to down vote a post without beign logged in" do
+    assert_equal 0, @post.up_votes
+    vote_post(@user, @post)
+    assert_equal 1, @post.up_votes
+
+    put "down_vote", :format => :json, :id => @post.id
+
+    assert_response 401
+    assert_equal 1, Post.find(@post.id).up_votes
   end
 
   test "create a post with json format" do
@@ -85,6 +103,19 @@ class Api::V1::PostsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "try to create a post without beign logged in" do
+    new_post = {
+      :link => "http://example.com/", 
+      :title => "New Post", 
+      :text => "New awesome post"
+    }
+    post("create", :format => :json, :post => new_post)
+    
+    created_post = Post.find_by_link("http://example.com/")
+    assert created_post.nil?
+    assert_response 401
+  end
+
   test "update a post with json format" do
     put "update", 
       :format => :json, 
@@ -116,6 +147,21 @@ class Api::V1::PostsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "try update a post without beign logged in" do
+    put "update", 
+      :format => :json, 
+      :id => @post.id, 
+      :post => {:link => "http://example.com/hackful/"}
+
+    updated_post = Post.find(@post.id)
+    assert !updated_post.nil?
+    assert_equal @post.title, updated_post.title
+    assert_equal @post.link, updated_post.link
+    assert_equal @post.text, updated_post.text
+    assert_equal @user.id, updated_post.user.id
+    assert_response 401
+  end
+
   test "destroy a post" do
     delete "destroy", 
       :format => :json, 
@@ -126,6 +172,16 @@ class Api::V1::PostsControllerTest < ActionController::TestCase
       deleted_post = Post.find(@post.id)
     end 
     assert_response :success
+  end
+
+  test "try to destroy a post without beign logged in" do
+    delete "destroy", 
+      :format => :json, 
+      :id => @post.id
+
+    post = Post.find(@post.id)
+    assert !post.nil?
+    assert_response 401
   end
 
   test "get frontpage posts" do

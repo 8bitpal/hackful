@@ -1,5 +1,4 @@
 class Api::V1::CommentsController < Api::ApplicationController
-  before_filter :authenticate_user!, :except => [:show, :show_post_comments, :show_user_comments]
   before_filter :check_login, only: [:up_vote, :down_vote, :create, :update, :destroy]
 
   # GET /comment/:id
@@ -48,8 +47,6 @@ class Api::V1::CommentsController < Api::ApplicationController
 
   # POST /comment
   def create
-    return not_loged_in unless user_signed_in?
-
     comment = Comment.new(params["comment"])
     comment.user_id = current_user.id
 

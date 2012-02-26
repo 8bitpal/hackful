@@ -63,6 +63,14 @@ class Api::V1::CommentsControllerTest < ActionController::TestCase
     assert_equal 1, Comment.find(@comment.id).up_votes
   end
 
+  test "try to vote a comment without beign signed in" do
+    assert_equal 0, Comment.find(@comment.id).up_votes
+    put "up_vote", :format => :json, :id => @comment.id
+    
+    assert_response 401
+    assert_equal 0, Comment.find(@comment.id).up_votes
+  end
+
   test "down vote a comment" do
     assert_equal 0, @comment.up_votes
     vote_comment(@user, @comment)
@@ -72,6 +80,17 @@ class Api::V1::CommentsControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_equal 0, Comment.find(@comment.id).up_votes
+  end
+
+  test "try to down vote a comment without beign signed in" do
+    assert_equal 0, @comment.up_votes
+    vote_comment(@user, @comment)
+    assert_equal 1, @comment.up_votes
+
+    put "down_vote", :format => :json, :id => @comment.id
+
+    assert_response 401
+    assert_equal 1, Comment.find(@comment.id).up_votes
   end
 
   test "create a comment with json format" do
@@ -108,6 +127,19 @@ class Api::V1::CommentsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "try to create a comment without being signed in" do
+    new_comment = {
+      :text => "New awesome comment", 
+      :commentable_id => @post.id,
+      :commentable_type => "Post"
+    }
+    post("create", :format => :json, :comment => new_comment)
+    created_comment = Comment.find_by_text("New awesome comment")
+    
+    assert created_comment.nil?
+    assert_response 401
+  end
+
   test "update a comment with json format" do
     put "update", 
       :format => :json, 
@@ -121,6 +153,20 @@ class Api::V1::CommentsControllerTest < ActionController::TestCase
     assert_equal "Changed comment text", updated_comment.text
     assert_equal @user.id, updated_comment.user.id
     assert_response :success
+  end
+
+  test "try to update a comment without beign signed in" do
+    put "update", 
+      :format => :json, 
+      :id => @comment.id, 
+      :comment => {:text => "Changed comment text"}
+    
+    comment = Comment.find(@comment.id)
+
+    assert !comment.nil?
+    assert_equal @comment.text, comment.text
+    assert_equal @user.id, comment.user.id
+    assert_response 401
   end
 
   test "update a comment without json format" do
@@ -147,6 +193,16 @@ class Api::V1::CommentsControllerTest < ActionController::TestCase
       deleted_comment = Comment.find(@comment.id)
     end 
     assert_response :success
+  end
+
+  test "try to destroy a comment without beign logged in" do
+    delete "destroy", 
+      :format => :json, 
+      :id => @comment.id
+
+    comment = Comment.find(@comment.id)
+    assert !comment.nil?
+    assert_response 401
   end
 
   private
