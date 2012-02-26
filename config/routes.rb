@@ -47,7 +47,7 @@ Hackful::Application.routes.draw do
       match 'post/:id/upvote'             => 'api/v1/posts#up_vote', via: :put
       match 'post/:id/downvote'           => 'api/v1/posts#down_vote', via: :put
 
-      match 'comments/user/:name'         => 'api/v1/comments#show_user_comments', via: :get
+      match 'comments/user/:id'           => 'api/v1/comments#show_user_comments', via: :get
       match 'comments/post/:id'           => 'api/v1/comments#show_post_comments', via: :get
       match 'comment/:id'                 => 'api/v1/comments#show', via: :get
       match 'comment/:id/upvote'          => 'api/v1/comments#up_vote', via: :put

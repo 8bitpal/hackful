@@ -11,7 +11,7 @@ class Api::V1::UsersController < Api::ApplicationController
     posts = Post.find_ordered(user.id, page)
   	
     # user_json = {:name => user.name, :posts => posts, :page => page}
-    user_json = {:name => user.name}
+    user_json = {:name => user.name, :id => user.id}
     # TODO: Email address only for registred users and loged in ?
     user_json[:email] = user.email if user_signed_in?
     

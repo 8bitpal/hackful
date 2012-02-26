@@ -18,9 +18,9 @@ class Api::V1::CommentsController < Api::ApplicationController
     render :json => post.comments
   end
 
-  # GET /comments/user/:name
+  # GET /comments/user/:id
   def show_user_comments
-    user = User.find(params[:name])
+    user = User.find(params[:id])
     raise ActiveRecord::RecordNotFound if user.nil?
 
     render :json => user.comments

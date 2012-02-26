@@ -50,10 +50,11 @@ class Api::V1::CommentsControllerTest < ActionController::TestCase
 
   test "show comment for user" do
     create_comments(30)
+    @comment.destroy
 
-    get 'show_user_comments', :format => :json, :name => @user.name
+    get 'show_user_comments', :format => :json, :id => @user.id
     comment_json = JSON.parse(response.body)
-
+    
     assert_equal 30, comment_json.length
     assert_response :success
   end
