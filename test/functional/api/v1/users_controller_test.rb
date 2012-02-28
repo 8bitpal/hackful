@@ -2,8 +2,12 @@ require 'test_helper'
 
 class Api::V1::UsersControllerTest < ActionController::TestCase
   def setup
+    @post = posts(:first)
     @user = users(:david)
+    @john = users(:john)
     @user.reset_authentication_token!
+    @post.user = @user
+    @post.save
   end
 
   def teardown
@@ -107,5 +111,48 @@ class Api::V1::UsersControllerTest < ActionController::TestCase
 
     response_json = JSON.parse(response.body)
     assert_response 422
+  end
+
+  test "get notifications of user" do
+    comment = create_comment(@user, @post)
+    create_comment(@john, comment)
+
+    get "notifications", :format => :json, :auth_token => @user.authentication_token
+    notification_json = JSON.parse(response.body)
+    
+    assert_equal 2, notification_json["new_notifications"].length
+    assert_equal 0, notification_json["old_notifications"].length
+    assert_response :success
+  end
+
+  test "get old notifications of user" do
+    comment = create_comment(@user, @post)
+    create_comment(@john, comment)
+
+    get "notifications", :format => :json, :auth_token => @user.authentication_token
+    get "notifications", :format => :json, :auth_token => @user.authentication_token
+    notification_json = JSON.parse(response.body)
+
+    assert_equal 0, notification_json["new_notifications"].length
+    assert_equal 2, notification_json["old_notifications"].length
+    assert_response :success
+  end
+
+  test "try to get notifications of user without beign logged in" do
+    get "notifications", :format => :json
+
+    assert_response 401
+  end
+
+  private
+  def create_comment(user, commentable)
+    comment = Comment.new
+    comment.text = "This is a sample Comment"
+    comment.user = user
+    comment.commentable_id = commentable.id
+    comment.commentable_type = commentable.class.name.demodulize
+    comment.save
+
+    return comment
   end
 end

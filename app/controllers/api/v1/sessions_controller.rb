@@ -15,7 +15,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from Api::BasicApi::NotLogedIn, with: :not_loged_in
   
-
+  # POST /api/v1/sessions/login
   def create
     build_resource
     email = params["user"]["email"]
@@ -36,6 +36,7 @@ class Api::V1::SessionsController < Devise::SessionsController
     return render :json => success_message("Successfully logged in", token_json)
   end
 
+  # DELETE /api/v1/sessions/logout
   def destroy
   	current_user.authentication_token = nil
     current_user.save

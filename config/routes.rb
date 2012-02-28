@@ -30,8 +30,9 @@ Hackful::Application.routes.draw do
 
       match 'signup'                      => 'api/v1/users#signup', via: :post
       
-      match 'user/:id'                  => 'api/v1/users#show', via: :get
-      match 'user'                  => 'api/v1/users#update', via: :put
+      match 'user/:id'                    => 'api/v1/users#show', via: :get
+      match 'user'                        => 'api/v1/users#update', via: :put
+      match 'user/notifications'          => 'api/v1/users#notifications', via: :get
       
       match 'posts/frontpage(/:page)'     => 'api/v1/posts#frontpage', via: :get
       match 'posts/new(/:page)'           => 'api/v1/posts#new', via: :get
@@ -59,6 +60,9 @@ Hackful::Application.routes.draw do
     match '*a' => 'api/application#not_found'
     root :to => 'api/application#not_found'
   end
+
+  devise_for :users
+  
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

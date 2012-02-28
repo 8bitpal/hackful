@@ -8,4 +8,12 @@ class ApplicationController < ActionController::Base
     @meta_keywords = "Europe, Startups, Entrepreneurs"
     @meta_description = "Hackful Europe is a place for European entrepreneurs to share demos, stories or ask questions."
   end
+
+  def after_sign_out_path_for(resource) 
+    super
+  end
+
+  def after_sign_in_path_for(resource) 
+    super
+  end
 end

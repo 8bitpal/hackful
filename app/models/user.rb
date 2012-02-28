@@ -18,5 +18,13 @@ class User < ActiveRecord::Base
 	:message => "can only contain letters and numbers."
 	
 	make_voter
+
+  def self.notifications(user)
+    {
+      :new_notifications => user.notifications.where(:unread => true),
+      :old_notifications => user.notifications.find(:all, 
+        :conditions => { :unread => false }, :limit => 20)      
+    }
+  end
 end
 

@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::ApplicationController
-  before_filter :check_login, only: :update
+  before_filter :check_login, only: [:update, :notifications]
 
   # GET /api/v1/user/:id
   def show
@@ -47,6 +47,16 @@ class Api::V1::UsersController < Api::ApplicationController
       render :json => failure_message("Couldn't sign up user", errors),
         :status => 422
     end
+  end
+
+  # GET /api/v1/user/notifications
+  def notifications
+    notifications = User.notifications(current_user)
+    notifiocations_json = notifications.to_json
+    
+    notifications[:new_notifications].update_all(:unread => false)
+
+    render :json => notifiocations_json
   end
 
 end
