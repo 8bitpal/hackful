@@ -19,10 +19,10 @@ class User < ActiveRecord::Base
 	
 	make_voter
 
-  def self.notifications(user)
+  def all_notifications
     {
-      :new_notifications => user.notifications.where(:unread => true),
-      :old_notifications => user.notifications.find(:all, 
+      :new_notifications => self.notifications.where(:unread => true),
+      :old_notifications => self.notifications.find(:all, 
         :conditions => { :unread => false }, :limit => 20)      
     }
   end

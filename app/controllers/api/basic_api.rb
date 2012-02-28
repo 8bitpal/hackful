@@ -8,13 +8,16 @@ module Api::BasicApi
   end
 
   def internal_server_error(exception = nil)
-    #head 500
-    error = { 
-     :error => "internal server error", 
-     :exception => exception.message, 
-     :stacktrace => exception.backtrace 
-    }
-    render :json => error, :status => 500
+    if Rails.env.production? then
+      head 500
+    else
+      error = { 
+       :error => "internal server error", 
+       :exception => exception.message, 
+       :stacktrace => exception.backtrace 
+      }
+      render :json => error, :status => 500
+    end
   end
 
   def no_parameter_found
@@ -39,13 +42,6 @@ module Api::BasicApi
 
   def check_login
     raise NotLogedIn unless user_signed_in?
-  end
-
-  def page_num(num = nil)
-    page = num.to_i
-    if page.nil? or page < 1 then page = 1 end
-
-    return page
   end
 
   private

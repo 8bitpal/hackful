@@ -12,7 +12,7 @@ class Post < ActiveRecord::Base
 	make_voteable
 
 	def self.find_user_posts(user, page = nil)
-		self.find_ordered self.offset(page), "user_id = #{user}"
+		self.find_ordered self.offset(page), "user_id = #{user.id}"
 	end
 
 	def self.find_frontpage(page = nil)
@@ -40,8 +40,8 @@ class Post < ActiveRecord::Base
 	end
 
 	def self.offset(page = nil)
-		if page.nil? or page < 1 then page = 1 end
-		offset = ((page-1)*20)
+		if page.nil? or page.blank? or page.to_i < 1 then page = 1 end
+		offset = ((page.to_i-1)*20)
 	end
 
 	def self.order_algorithm

@@ -51,7 +51,7 @@ class Api::V1::UsersController < Api::ApplicationController
 
   # GET /api/v1/user/notifications
   def notifications
-    notifications = User.notifications(current_user)
+    notifications = current_user.all_notifications
     notifiocations_json = notifications.to_json
     
     notifications[:new_notifications].update_all(:unread => false)

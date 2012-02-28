@@ -211,7 +211,7 @@ class Api::V1::CommentsControllerTest < ActionController::TestCase
       comment = Comment.new({:text => "Post Text #{i}"})
       comment.user = @user
       comment.commentable_id = @post.id
-      comment.commentable_type = "Post"
+      comment.commentable_type = @post.class.name.demodulize
       comment.save
     end
   end

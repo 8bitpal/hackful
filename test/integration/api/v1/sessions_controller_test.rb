@@ -16,7 +16,6 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
       :password_confirmation => PASSWORD
     })
     @user.reset_authentication_token!
-    #@user.reset_password("test123", "test123")
     @user.save
   end
 
@@ -73,6 +72,31 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
     destroy_session_json = JSON.parse(response.body)
     
     assert !destroy_session_json["success"]
+    assert_response 401
+  end
+
+  test "try to logout with logged out token" do
+    # login
+    post "/api/v1/sessions/login",
+      :format => :json, 
+      :user => {:email => @user.email, :password => "test123"}
+    
+    session_json = JSON.parse(response.body)
+    auth_token = session_json["auth_token"]
+    assert !auth_token.nil?
+    
+    # logout
+    delete "/api/v1/sessions/logout", :format => :json#, :auth_token => auth_token
+    first_logout_json = JSON.parse(response.body)
+    
+    assert first_logout_json["success"]
+    assert_response :success
+
+    # logout a second time to check if first time worked
+    delete "/api/v1/sessions/logout", :format => :json, :auth_token => auth_token
+    second_logout_json = JSON.parse(response.body)
+    
+    assert !second_logout_json["success"]
     assert_response 401
   end
 end

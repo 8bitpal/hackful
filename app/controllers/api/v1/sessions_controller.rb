@@ -25,8 +25,8 @@ class Api::V1::SessionsController < Devise::SessionsController
     return invalid_login_attempt unless resource.valid_password?(password)
      
     sign_in("user", resource)
-    #puts "signed_in?: #{signed_in?}"
-    resource.reset_authentication_token!
+    resource.ensure_authentication_token!
+    #resource.reset_authentication_token!
 
     token_json = {
       :auth_token => resource.authentication_token, 
@@ -38,8 +38,13 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   # DELETE /api/v1/sessions/logout
   def destroy
-  	current_user.authentication_token = nil
+    current_user.authentication_token = nil
+    current_user.reset_authentication_token!
     current_user.save
+    token = current_user.authentication_token
+    
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    
     render :json => success_message("Successfully logged out")
   end
 

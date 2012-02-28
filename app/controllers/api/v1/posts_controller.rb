@@ -12,7 +12,7 @@ class Api::V1::PostsController < Api::ApplicationController
   # GET /posts/user/:id(/:page)
   def show_user_posts
     user = User.find(params[:id])
-    posts = Post.find_user_posts(user, page_num(params[:page]))
+    posts = Post.find_user_posts(user, params[:page])
     
     render :json => posts
   end
@@ -23,7 +23,6 @@ class Api::V1::PostsController < Api::ApplicationController
     raise ActiveRecord::RecordNotFound if post.nil?
     
     current_user.up_vote(post)
-    #post.save
     
     render :json => success_message("Successfully voted up post")
   end
@@ -34,7 +33,6 @@ class Api::V1::PostsController < Api::ApplicationController
     raise ActiveRecord::RecordNotFound if post.nil?
     
     current_user.down_vote(post)
-    #post.save
     
     render :json => success_message("Successfully voted down post")
   end
@@ -84,17 +82,17 @@ class Api::V1::PostsController < Api::ApplicationController
 
   # GET /posts/frontpage(/:page)
   def frontpage
-    return render :json => Post.find_frontpage(page_num(params[:page]))
+    return render :json => Post.find_frontpage(params[:page])
   end
 
   # GET /posts/new(/:page)
   def new
-    return render :json => Post.find_new(page_num(params[:page]))
+    return render :json => Post.find_new(params[:page])
   end
   
   # GET /posts/ask(/:page)
   def ask
-    return render :json => Post.find_ask(page_num(params[:page]))
+    return render :json => Post.find_ask(params[:page])
   end
 
   private
