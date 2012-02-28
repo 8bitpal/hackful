@@ -1,6 +1,0 @@
-
-log/development.log
-
-config/initializers/secret_token.rb
-
-tmp/**/*
