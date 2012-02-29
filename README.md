@@ -26,18 +26,17 @@ GET http://hackful.com/api/v1/posts/frontpage
 ```
 
 Response:
-```json
-[{
-	"created_at":"2012-02-22T17:34:02Z",
-	"down_votes":0,"id":2,
-	"link":"",
-	"text":"This is a text",
-	"title":"This is a title",
-	"up_votes":2,
-	"updated_at":"2012-02-29T07:16:51Z",
-	"user_id":2
-}, ...]
-```
+
+	[{
+		"created_at":"2012-02-22T17:34:02Z",
+		"down_votes":0,"id":2,
+		"link":"",
+		"text":"This is a text",
+		"title":"This is a title",
+		"up_votes":2,
+		"updated_at":"2012-02-29T07:16:51Z",
+		"user_id":2
+	}, ...]
 
 ### Login and recieve a auth_token:
 ```console
@@ -46,15 +45,15 @@ user[email]=david@example.com&user[password]=mypassword
 ```
 
 Response: 
-```json
-{	
-	"success":true,
-	"message":"Successfully logged in",
-	"auth_token":"1ZwyJfbv7eiiLE7Gipsv",
-	"name":"david",
-	"email":"david@example.com"
-}
-```
+
+	{	
+		"success":true,
+		"message":"Successfully logged in",
+		"auth_token":"1ZwyJfbv7eiiLE7Gipsv",
+		"name":"david",
+		"email":"david@example.com"
+	}
+
 
 ### Upvote a post
 ```console
