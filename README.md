@@ -106,7 +106,7 @@ ToDo's
 Contribution
 ===
 
-[Discussion on hackful.com](http://hackful.com/API)
+[Discussion on hackful.com](http://hackful.com/posts/572)
 
 Please post feature requests or bugs as issues.
 
