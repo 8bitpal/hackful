@@ -17,7 +17,7 @@ class Api::V1::PostsController < Api::ApplicationController
     render :json => posts
   end
 
-  # PUT /post/:id/vote
+  # PUT /post/:id/upvote
   def up_vote
     post = Post.find(params[:id])
     raise ActiveRecord::RecordNotFound if post.nil?
