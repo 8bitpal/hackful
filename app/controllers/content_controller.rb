@@ -1,6 +1,8 @@
 class ContentController < ApplicationController
   def frontpage
-		@posts = Post.find_frontpage(params[:page])
+		@page = page_number(params[:page])
+    @posts = Post.find_frontpage(@page)
+    @show_next_link = (Post.find_frontpage(@page+1).length > 0)
 
     respond_to do |f|
 			f.html
@@ -9,8 +11,10 @@ class ContentController < ApplicationController
   end
 
   def new
-		@posts = Post.find_new(params[:page])
-    
+    @page = page_number(params[:page])
+		@posts = Post.find_new(@page)
+    @show_next_link = (Post.find_frontpage(@page+1).length > 0)
+
     respond_to do |f|
 			f.html
 			f.rss { render :layout => false }
@@ -18,8 +22,10 @@ class ContentController < ApplicationController
   end
   
   def ask
-		@posts = Post.find_ask(params[:page])
-    
+    @page = page_number(params[:page])
+		@posts = Post.find_ask(@page)
+    @show_next_link = (Post.find_frontpage(@page+1).length > 0)
+
 		respond_to do |f|
 			f.html
 			f.rss { render :layout => false }
