@@ -27,7 +27,16 @@ GET http://hackful.com/api/v1/posts/frontpage
 
 Response:
 ```json
-[{"created_at":"2012-02-22T17:34:02Z","down_votes":0,"id":2,"link":"","text":"This is a text","title":"This is a title","up_votes":2,"updated_at":"2012-02-29T07:16:51Z","user_id":2}, ...]
+[{
+	"created_at":"2012-02-22T17:34:02Z",
+	"down_votes":0,"id":2,
+	"link":"",
+	"text":"This is a text",
+	"title":"This is a title",
+	"up_votes":2,
+	"updated_at":"2012-02-29T07:16:51Z",
+	"user_id":2
+}, ...]
 ```
 
 ### Login and recieve a auth_token:
@@ -38,7 +47,13 @@ user[email]=david@example.com&user[password]=mypassword
 
 Response: 
 ```json
-{"success":true,"message":"Successfully logged in","auth_token":"1ZwyJfbv7eiiLE7Gipsv","name":"david","email":"david@example.com"}
+{	
+	"success":true,
+	"message":"Successfully logged in",
+	"auth_token":"1ZwyJfbv7eiiLE7Gipsv",
+	"name":"david",
+	"email":"david@example.com"
+}
 ```
 
 ### Upvote a post
@@ -56,32 +71,32 @@ auth_token=1ZwyJfbv7eiiLE7Gipsv&post[text]=Text&post[title]=Title&post[link]=htt
 All implemented methods:
 ===
 
-POST 	/api/v1/signup
+	POST 	/api/v1/signup
 
-GET 	/api/v1/user/:id
-GET 	/api/v1/user/notifications
-PUT 	/api/v1/user
+	GET 	/api/v1/user/:id
+	GET 	/api/v1/user/notifications
+	PUT 	/api/v1/user
 
-GET 	/api/v1/posts/frontpage(/:page)
-GET 	/api/v1/posts/new(/:page)
-GET 	/api/v1/posts/ask(/:page)
-GET 	/api/v1/posts/user/:id(/:page)
+	GET 	/api/v1/posts/frontpage(/:page)
+	GET 	/api/v1/posts/new(/:page)
+	GET 	/api/v1/posts/ask(/:page)
+	GET 	/api/v1/posts/user/:id(/:page)
 
-GET 	/api/v1/post/:id
-POST 	/api/v1/post
-PUT 	/api/v1/post/:id
-DELETE 	/api/v1/post/:id
-PUT 	/api/v1/post/:id/upvote
-PUT 	/api/v1/post/:id/downvote
+	GET 	/api/v1/post/:id
+	POST 	/api/v1/post
+	PUT 	/api/v1/post/:id
+	DELETE 	/api/v1/post/:id
+	PUT 	/api/v1/post/:id/upvote
+	PUT 	/api/v1/post/:id/downvote
 
-GET 	/api/v1/comments/user/:id
-GET 	/api/v1/comments/post/:id
-GET 	/api/v1/comment/:id
-POST 	/api/v1/comment
-PUT 	/api/v1/comment/:id
-DELETE 	/api/v1/comment/:id
-PUT 	/api/v1/comment/:id/upvote
-PUT 	/api/v1/comment/:id/downvote
+	GET 	/api/v1/comments/user/:id
+	GET 	/api/v1/comments/post/:id
+	GET 	/api/v1/comment/:id
+	POST 	/api/v1/comment
+	PUT 	/api/v1/comment/:id
+	DELETE 	/api/v1/comment/:id
+	PUT 	/api/v1/comment/:id/upvote
+	PUT 	/api/v1/comment/:id/downvote
 
 ToDo's
 ===
