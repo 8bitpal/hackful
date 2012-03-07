@@ -1,4 +1,7 @@
 Hackful::Application.routes.draw do
+  get "admin/mail"
+  post "admin/send_newsletter"
+
 	match "/about" => "content#about"
     
   match "/user/:name" => "users#show", :as => 'user'
@@ -18,6 +21,7 @@ Hackful::Application.routes.draw do
   resources :posts
 
   devise_for :users
+  resources :users, has_one: :data_set
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

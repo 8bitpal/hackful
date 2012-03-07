@@ -5,12 +5,16 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :data_set_attributes
 	
 	has_many :votes, :as => :voteable
 	has_many :comments
 	has_many :posts
 	has_many :notifications, :order => "created_at DESC"
+	has_many :admin_auths
+
+	has_one :data_set
+	accepts_nested_attributes_for :data_set
 	
 	validates_uniqueness_of :name
 	validates_format_of :name, :with => /\A[a-zA-Z0-9]+\z/i,

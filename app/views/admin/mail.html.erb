@@ -1,0 +1,8 @@
+<h1>Mails</h1>
+
+<%= form_tag "/admin/send_newsletter" do %>
+	Test run <%= check_box_tag "test" %><br />
+	<%= text_field_tag :subject %><br />
+	<%= text_area_tag :text %><br /><br />
+	<%= submit_tag "Send" %><br />
+<% end %>
