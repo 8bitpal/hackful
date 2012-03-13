@@ -12,10 +12,28 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :test do
+group :test, :development do
 	gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem 'rspec-rails'
+  gem 'cucumber-rails', require: false
+  gem "factory_girl_rails"
 	gem 'capybara'
+  gem "capybara-webkit"
+  gem 'fakeweb'
+  gem "launchy"
 	gem 'database_cleaner', :group => :test
+
+  if RUBY_PLATFORM.downcase.include?("darwin")
+    gem "guard"
+    gem "guard-rspec"
+    gem "guard-cucumber"
+    gem "guard-bundler"
+    gem "guard-spork"
+    gem 'spork'
+    gem 'rb-fsevent'
+    gem 'growl' # also install growlnotify from the Extras/growlnotify/growlnotify.pkg in Growl disk image
+  end
 end
 
 gem 'execjs'
@@ -28,4 +46,5 @@ gem 'make_voteable'
 gem 'mysql2'
 gem 'rails_autolink'
 gem 'rdiscount'
+gem 'delayed_job'
 gem 'delayed_job_active_record'
