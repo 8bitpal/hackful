@@ -33,8 +33,9 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
     session_json = JSON.parse(response.body)
 
     @user = User.find_by_email(@user.email)
-    assert_equal @user.email, session_json["email"]
-    assert_equal @user.name, session_json["name"]
+    assert_equal @user.id, session_json["user"]["id"]
+    assert_equal @user.email, session_json["user"]["email"]
+    assert_equal @user.name, session_json["user"]["name"]
     assert_equal @user.authentication_token, session_json["auth_token"]
     assert_response :success
   end

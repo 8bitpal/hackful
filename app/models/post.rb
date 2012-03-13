@@ -28,6 +28,18 @@ class Post < ActiveRecord::Base
 		Post.find(:all, :order => "created_at DESC", :limit => 20, :offset => offset)
 	end
 
+	def as_json(options = {})
+		super(
+			:include => {:user => {:only => [:id, :name]}},
+			:except  => :user_id,
+			:methods => :comment_count
+		)
+	end
+
+	def comment_count
+		comments.length
+	end
+
 	private
 	def self.find_ordered(offset, where = nil)
 		where = where.nil? ? "" : "WHERE #{where}"

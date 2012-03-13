@@ -13,8 +13,8 @@ class Api::V1::CommentsController < Api::ApplicationController
   def show_post_comments
     post = Post.find(params[:id])
     raise ActiveRecord::RecordNotFound if post.nil?
-
-    render :json => post.comments
+    
+    render :json => all_comments(post)
   end
 
   # GET /comments/user/:id
@@ -85,5 +85,16 @@ class Api::V1::CommentsController < Api::ApplicationController
   private
   def is_own_comment?(comment)
     return comment.user.eql? current_user
+  end
+
+  def all_comments(commentable)
+    children = []
+    commentable.comments.each do |comment|
+      comment_json = comment.as_json
+      comment_json.merge! ({:children => all_comments(comment)})
+      
+      children.push(comment_json)
+    end
+    return children
   end
 end

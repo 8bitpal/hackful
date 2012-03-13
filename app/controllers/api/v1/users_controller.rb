@@ -6,7 +6,7 @@ class Api::V1::UsersController < Api::ApplicationController
     user = User.find(params[:id])
     raise ActiveRecord::RecordNotFound if user.nil?
     
-    user_json = {:name => user.name, :id => user.id}
+    user_json = {:id => user.id, :name => user.name}
     # TODO: Email address only for registred users and loged in ?
     user_json[:email] = user.email if user_signed_in?
     

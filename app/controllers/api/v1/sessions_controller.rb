@@ -17,6 +17,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   
   # POST /api/v1/sessions/login
   def create
+    return invalid_login_attempt if params["user"].nil?
     build_resource
     email = params["user"]["email"]
     password = params["user"]["password"]
@@ -26,14 +27,16 @@ class Api::V1::SessionsController < Devise::SessionsController
      
     sign_in("user", resource)
     resource.ensure_authentication_token!
-    #resource.reset_authentication_token!
 
-    token_json = {
-      :auth_token => resource.authentication_token, 
-      :name => resource.name, 
-      :email => resource.email
+    user_token_json = {
+      :auth_token => resource.authentication_token,
+      :user => {
+        :id => resource.id,
+        :name => resource.name, 
+        :email => resource.email,
+      }
     }
-    return render :json => success_message("Successfully logged in", token_json)
+    return render :json => success_message("Successfully logged in", user_token_json)
   end
 
   # DELETE /api/v1/sessions/logout
