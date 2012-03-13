@@ -23,6 +23,7 @@ group :test, :development do
   gem 'fakeweb'
   gem "launchy"
 	gem 'database_cleaner', :group => :test
+  gem 'faker'
 
   if RUBY_PLATFORM.downcase.include?("darwin")
     gem "guard"
