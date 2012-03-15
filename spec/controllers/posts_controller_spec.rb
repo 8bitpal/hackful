@@ -132,7 +132,7 @@ describe PostsController do
         it "renders json for post" do
           put 'update', id: new_post.id, format: :json
           response.body.should == " "
-          response.status.should == 201
+          response.should be_success
         end
       end
 
@@ -159,4 +159,35 @@ describe PostsController do
       end
     end
   end
+
+  describe "DELETE 'destroy'" do
+    it "should destroy model and redirect to index action" do
+      delete :destroy, id: new_post.id
+      response.should redirect_to(posts_url)
+      Post.exists?(new_post.id).should be_false
+    end
+
+    it "should redirect to index action when trying to delete non-existant post" do
+      delete :destroy, id: "9999"
+      response.should redirect_to(posts_url)
+      Post.exists?(new_post.id).should be_false
+    end
+  end
+
+  #TODO FIX This is broken. No template to render
+  #describe "#vote_up" do
+  #  it "sends vote up message to User" do
+  #    get 'vote_up', id: "1", format: :json
+  #    subject.current_user.should_receive(:vote_down).once
+  #  end
+  #end
+  #
+  ##TODO FIX This is broken. No template to render
+  #describe "#vote_down" do
+  #  it "sends vote down message to User" do
+  #    get 'vote_down', id: "1", format: :json
+  #    subject.current_user.should_receive(:vote_up).once
+  #  end
+  #  it "does not vote up if the user has already voted" 
+  #end
 end
