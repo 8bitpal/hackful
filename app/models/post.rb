@@ -37,7 +37,7 @@ class Post < ActiveRecord::Base
 	end
 
 	def comment_count
-		comments.length
+		Post.count_all_comments(comments)
 	end
 
 	private
@@ -61,4 +61,13 @@ class Post < ActiveRecord::Base
 		order_algorithm = "((posts.up_votes - posts.down_votes) -1)/
 												POW((#{date_diff} / 3600)+2), 1.5)"
 	end
+
+	def self.count_all_comments(comments)
+    count = 0
+    comments.each do |comment|
+      count = count + 1
+			count += count_all_comments(comment.comments)
+    end
+    return count
+  end
 end
