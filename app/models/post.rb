@@ -1,4 +1,6 @@
 class Post < ActiveRecord::Base
+	include Rails.application.routes.url_helpers
+
 	has_many :comments, :as => :commentable, :order => "((comments.up_votes - comments.down_votes) - 1 )/POW((((UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(comments.created_at)) / 3600 )+2), 1.5) DESC"
 	belongs_to :user
 	
@@ -32,7 +34,7 @@ class Post < ActiveRecord::Base
 		super(
 			:include => {:user => {:only => [:id, :name]}},
 			:except  => :user_id,
-			:methods => :comment_count
+			:methods => [:comment_count, :path, :voted]
 		)
 	end
 
@@ -40,6 +42,19 @@ class Post < ActiveRecord::Base
 		Post.count_all_comments(comments)
 	end
 
+	def path
+		post_path(self)
+	end
+
+	def voted
+		current_user = User.current_user
+		unless current_user.blank?
+			current_user.voted?(self)
+		else
+			false
+		end 
+	end
+	
 	private
 	def self.find_ordered(offset, where = nil)
 		where = where.nil? ? "" : "WHERE #{where}"

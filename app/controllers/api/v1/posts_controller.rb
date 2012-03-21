@@ -1,5 +1,6 @@
 class Api::V1::PostsController < Api::ApplicationController
   before_filter :check_login, only: [:up_vote, :down_vote, :create, :update, :destroy]
+  before_filter :set_current_user
 
   # GET /post/:id
   def show
@@ -82,6 +83,7 @@ class Api::V1::PostsController < Api::ApplicationController
 
   # GET /posts/frontpage(/:page)
   def frontpage
+    user_signed_in?
     return render :json => Post.find_frontpage(params[:page])
   end
 
@@ -98,5 +100,9 @@ class Api::V1::PostsController < Api::ApplicationController
   private
   def is_own_post?(post)
     return post.user.eql? current_user
+  end
+
+  def set_current_user
+    User.current_user = current_user if user_signed_in?
   end
 end
