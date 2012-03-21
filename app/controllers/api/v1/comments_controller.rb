@@ -1,5 +1,6 @@
 class Api::V1::CommentsController < Api::ApplicationController
   before_filter :check_login, only: [:up_vote, :down_vote, :create, :update, :destroy]
+  before_filter :set_current_user
 
   # GET /comment/:id
   def show
@@ -96,5 +97,9 @@ class Api::V1::CommentsController < Api::ApplicationController
       children.push(comment_json)
     end
     return children
+  end
+
+  def set_current_user
+    User.current_user = current_user if user_signed_in?
   end
 end
