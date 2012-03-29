@@ -22,7 +22,7 @@ class PostsController < FilterController
   # GET /posts/new
   # GET /posts/new.json
   def new
-    @post = Post.new
+    @post = Post.new(:link => params[:link], :title => params[:title])
 
     respond_to do |format|
       format.html # new.html.erb
