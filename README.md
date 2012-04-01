@@ -1,9 +1,19 @@
 About
 ===
 
-This is a fork for the hackful API.
+Hackful is a platform developed to power http://hackful.com, a place 
+for European entrepreneurs to share demos, stories or ask questions.
 
-### Here are a couple of specs:
+Developed by  [@8bitpal](https://twitter.com/8bitpal)
+ 
+Idea by [@rayhanrafiq](https://twitter.com/rayhanrafiq) and [@mattslight](https://twitter.com/mattslight)
+
+Hosting donated by [incite ict](http://www.incite-ict.com/)
+
+API
+===
+
+[Discussion on hackful.com](http://hackful.com/posts/572)
 
 * Format for API is JSON
 * You can Login with your credential or with a authentication token
@@ -17,11 +27,9 @@ This is a fork for the hackful API.
 
 * Login is not encrypted and this should be fixed
 
+### Examples for API: 
 
-Examples for API: 
-===
-
-### Request all posts on frontpage:
+#### Request all posts on frontpage:
 ```console
 GET http://hackful.com/api/v1/posts/frontpage
 ```
@@ -46,7 +54,7 @@ Response:
 		}
 	}, ...]
 
-### Request all comments for a post:
+#### Request all comments for a post:
 ```console
 GET http://hackful.com/api/v1/posts/frontpage
 ```
@@ -80,7 +88,7 @@ GET http://hackful.com/api/v1/posts/frontpage
 			}, ... ]
 	}, ...]
 
-### Login and recieve a auth_token:
+#### Login and recieve a auth_token:
 ```console
 POST http://hackful.com/api/v1/sessions/login
 user[email]=david@example.com&user[password]=mypassword
@@ -99,20 +107,19 @@ Response:
 		}
 	}
 
-### Upvote a post
+#### Upvote a post
 ```console
 PUT http://hackful.com/api/v1/post/1/upvote
 auth_token=1ZwyJfbv7eiiLE7Gipsv
 ```
 
-### Submit a new article:
+#### Submit a new article:
 ```console
 POST http://hackful.com/api/v1/post
 auth_token=1ZwyJfbv7eiiLE7Gipsv&post[text]=Text&post[title]=Title&post[link]=http://example.com
 ```
 
-All implemented API methods:
-===
+### All implemented API methods:
 
 	POST 	/api/v1/signup
 
@@ -141,20 +148,18 @@ All implemented API methods:
 	PUT 	/api/v1/comment/:id/upvote
 	PUT 	/api/v1/comment/:id/downvote
 
-ToDo's
-===
-
-* Write documentation for API
-* Encrypt login via API (password is send without encryption to API)
-
 Contribution
 ===
-
-[Discussion on hackful.com](http://hackful.com/posts/572)
 
 Please post feature requests or bugs as issues.
 
 Testing
 ---
 
-There are functional and integration tests for API controllers available.
+Cucumber test cases are almost done and on the way.
+
+ToDo's
+===
+
+* Write documentation for API
+* Encrypt login via API (password is send without encryption to API)
