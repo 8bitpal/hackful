@@ -8,16 +8,12 @@ module Api::BasicApi
   end
 
   def internal_server_error(exception = nil)
-    if Rails.env.production? then
-      head 500
-    else
-      error = { 
-       :error => "internal server error", 
-       :exception => exception.message, 
-       :stacktrace => exception.backtrace 
-      }
-      render :json => error, :status => 500
-    end
+    error = { 
+      :error => "internal server error", 
+      :exception => exception.message, 
+      :stacktrace => exception.backtrace 
+    }
+    render :json => error, :status => 500
   end
 
   def no_parameter_found
