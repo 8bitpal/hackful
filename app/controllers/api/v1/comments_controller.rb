@@ -58,7 +58,7 @@ class Api::V1::CommentsController < Api::ApplicationController
   # PUT /comment/:id
   def update
     comment = Comment.find(params[:id])
-    raise "NoPermission" unless is_own_comment?(comment)
+    raise Api::BasicApi::NoPermission unless is_own_comment?(comment)
 
     if comment.update_attributes(params["comment"])
       head :ok
@@ -71,7 +71,7 @@ class Api::V1::CommentsController < Api::ApplicationController
   # DELETE /comment/:id
   def destroy
     comment = Comment.find(params[:id])
-    raise "NoPermission" unless is_own_comment?(comment)
+    raise Api::BasicApi::NoPermission unless is_own_comment?(comment)
 
     comment.destroy
     head :ok

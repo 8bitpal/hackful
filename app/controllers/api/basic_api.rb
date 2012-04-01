@@ -2,6 +2,7 @@ require 'action_controller'
 module Api::BasicApi
   class NotLogedIn < StandardError; end
   class NoParameter < StandardError; end
+  class NoPermission < StandardError; end
 
   def not_found
     head :not_found

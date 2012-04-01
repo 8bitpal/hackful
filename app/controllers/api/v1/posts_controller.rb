@@ -56,7 +56,7 @@ class Api::V1::PostsController < Api::ApplicationController
   # PUT /post/:id
   def update
     post = Post.find(params[:id])
-    raise "NoPermission" unless is_own_post?(post)
+    raise Api::BasicApi::NoPermission unless is_own_post?(post)
     
     if post.update_attributes(params["post"])
       #head :ok
@@ -70,7 +70,7 @@ class Api::V1::PostsController < Api::ApplicationController
   # DELETE /post/:id
   def destroy
     post = Post.find(params[:id])
-    raise "NoPermission" unless is_own_post?(post)
+    raise Api::BasicApi::NoPermission unless is_own_post?(post)
 
     post.destroy
     head :ok
