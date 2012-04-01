@@ -13,37 +13,33 @@ class Api::V1::CommentsController < Api::ApplicationController
   # GET /comments/post/:id
   def show_post_comments
     post = Post.find(params[:id])
-    raise ActiveRecord::RecordNotFound if post.nil?
-    
+
     render :json => all_comments(post)
   end
 
   # GET /comments/user/:id
   def show_user_comments
     user = User.find(params[:id])
-    raise ActiveRecord::RecordNotFound if user.nil?
-
+    
     render :json => user.comments
   end
 
   # PUT /comment/:id/upvote
   def up_vote
     comment = Comment.find(params[:id])
-    raise ActiveRecord::RecordNotFound if comment.nil?
     
     current_user.up_vote(comment)
     
-    render :json => success_message("Successfully up voted comment")
+    render :json => success_message("Successfully upvoted comment")
   end
 
   # PUT /comment/:id/downvote 
   def down_vote
     comment = Comment.find(params[:id])
-    raise ActiveRecord::RecordNotFound if comment.nil?
     
     current_user.down_vote(comment)
     
-    render :json => success_message("Successfully down voted comment")
+    render :json => success_message("Successfully downvoted comment")
   end
 
   # POST /comment
@@ -62,7 +58,6 @@ class Api::V1::CommentsController < Api::ApplicationController
   # PUT /comment/:id
   def update
     comment = Comment.find(params[:id])
-    raise ActiveRecord::RecordNotFound if comment.nil?
     raise "NoPermission" unless is_own_comment?(comment)
 
     if comment.update_attributes(params["comment"])
@@ -76,7 +71,6 @@ class Api::V1::CommentsController < Api::ApplicationController
   # DELETE /comment/:id
   def destroy
     comment = Comment.find(params[:id])
-    raise ActiveRecord::RecordNotFound if comment.nil?
     raise "NoPermission" unless is_own_comment?(comment)
 
     comment.destroy

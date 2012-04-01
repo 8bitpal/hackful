@@ -4,7 +4,6 @@ class Api::V1::UsersController < Api::ApplicationController
   # GET /api/v1/user/:id
   def show
     user = User.find(params[:id])
-    raise ActiveRecord::RecordNotFound if user.nil?
     
     user_json = {:id => user.id, :name => user.name}
     # TODO: Email address only for registred users and loged in ?

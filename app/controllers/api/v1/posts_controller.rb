@@ -5,7 +5,6 @@ class Api::V1::PostsController < Api::ApplicationController
   # GET /post/:id
   def show
     post = Post.find(params[:id])
-    raise ActiveRecord::RecordNotFound if post.nil?
     
     render :json => post
   end
@@ -21,21 +20,19 @@ class Api::V1::PostsController < Api::ApplicationController
   # PUT /post/:id/upvote
   def up_vote
     post = Post.find(params[:id])
-    raise ActiveRecord::RecordNotFound if post.nil?
     
     current_user.up_vote(post)
     
-    render :json => success_message("Successfully voted up post")
+    render :json => success_message("Successfully upvoted post")
   end
 
   # PUT /post/:id/unvote
   def down_vote
     post = Post.find(params[:id])
-    raise ActiveRecord::RecordNotFound if post.nil?
     
     current_user.down_vote(post)
     
-    render :json => success_message("Successfully voted down post")
+    render :json => success_message("Successfully downvoted post")
   end
 
   # POST /post
@@ -59,7 +56,6 @@ class Api::V1::PostsController < Api::ApplicationController
   # PUT /post/:id
   def update
     post = Post.find(params[:id])
-    raise ActiveRecord::RecordNotFound if post.nil?
     raise "NoPermission" unless is_own_post?(post)
     
     if post.update_attributes(params["post"])
@@ -74,7 +70,6 @@ class Api::V1::PostsController < Api::ApplicationController
   # DELETE /post/:id
   def destroy
     post = Post.find(params[:id])
-    raise ActiveRecord::RecordNotFound if post.nil?
     raise "NoPermission" unless is_own_post?(post)
 
     post.destroy
