@@ -1,5 +1,5 @@
 About
-===
+---
 
 Hackful is a platform developed to power http://hackful.com, a place 
 for European entrepreneurs to share demos, stories or ask questions.
@@ -11,9 +11,9 @@ Idea by [@rayhanrafiq](https://twitter.com/rayhanrafiq) and [@mattslight](https:
 Hosting donated by [incite ict](http://www.incite-ict.com/)
 
 API
-===
+---
 
-[Discussion on hackful.com](http://hackful.com/posts/572)
+### Quick Facts
 
 * Format for API is JSON
 * You can Login with your credential or with a authentication token
@@ -23,18 +23,20 @@ API
 * You can signup via API
 * Notfications are avalaible as JSON if you are logged in
 
+[Discussion on hackful.com](http://hackful.com/posts/572)
+
 ### Known issues:
 
 * Login is not encrypted and this should be fixed
 
 ### Examples for API: 
 
-#### Request all posts on frontpage:
+##### Request all posts on frontpage:
 ```console
 GET http://hackful.com/api/v1/posts/frontpage
 ```
 
-Response:
+##### Response:
 
 	[{
 		"created_at":"2012-03-24T10:11:14Z",
@@ -54,10 +56,12 @@ Response:
 		}
 	}, ...]
 
-#### Request all comments for a post:
+##### Request all comments for a post:
 ```console
 GET http://hackful.com/api/v1/posts/frontpage
 ```
+
+##### Response:
 
 	[{
 		"commentable_id":49,
@@ -88,13 +92,13 @@ GET http://hackful.com/api/v1/posts/frontpage
 			}, ... ]
 	}, ...]
 
-#### Login and recieve a auth_token:
+##### Login and recieve a auth_token:
 ```console
 POST http://hackful.com/api/v1/sessions/login
 user[email]=david@example.com&user[password]=mypassword
 ```
 
-Response: 
+##### Response:
 
 	{
 		"success":true,
@@ -107,13 +111,13 @@ Response:
 		}
 	}
 
-#### Upvote a post
+##### Upvote a post
 ```console
 PUT http://hackful.com/api/v1/post/1/upvote
 auth_token=1ZwyJfbv7eiiLE7Gipsv
 ```
 
-#### Submit a new article:
+##### Submit a new article:
 ```console
 POST http://hackful.com/api/v1/post
 auth_token=1ZwyJfbv7eiiLE7Gipsv&post[text]=Text&post[title]=Title&post[link]=http://example.com
@@ -149,7 +153,7 @@ auth_token=1ZwyJfbv7eiiLE7Gipsv&post[text]=Text&post[title]=Title&post[link]=htt
 	PUT 	/api/v1/comment/:id/downvote
 
 Contribution
-===
+---
 
 Please post feature requests or bugs as issues.
 
@@ -159,7 +163,7 @@ Testing
 Cucumber test cases are almost done and on the way.
 
 ToDo's
-===
+----
 
-* Write documentation for API
-* Encrypt login via API (password is send without encryption to API)
+* Write wiki article for hackful API
+* Encrypt API login (password is send without encryption to API)
