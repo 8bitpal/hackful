@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(:version => 20120307155241) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
->>>>>>> 1a24b96f2e8555e79cf7dc79ddc48efd70ca40fe
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
