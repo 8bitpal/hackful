@@ -18,6 +18,11 @@
   <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
   <%= f.password_field :current_password %></div>
 
+  <div><%= f.fields_for :data_set do |data_set_form| %>
+    <%= data_set_form.label :contact_me, "Send email notifications" %>
+    <%= data_set_form.check_box :contact_me %>
+  <% end %></div>
+
   <div><%= f.submit "Update" %></div>
 <% end %>
 

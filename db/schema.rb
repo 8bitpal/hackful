@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120219131606) do
+ActiveRecord::Schema.define(:version => 20120307155241) do
+
+  create_table "admin_auths", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "resource"
+    t.string   "action"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
@@ -23,6 +31,36 @@ ActiveRecord::Schema.define(:version => 20120219131606) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "data_sets", :force => true do |t|
+    t.integer  "user_id"
+    t.boolean  "contact_me", :default => true
+    t.string   "twitter"
+    t.string   "github"
+    t.string   "linkedin"
+    t.string   "url"
+    t.string   "blog"
+    t.text     "about_me"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+>>>>>>> 1a24b96f2e8555e79cf7dc79ddc48efd70ca40fe
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"

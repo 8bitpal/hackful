@@ -1,5 +1,9 @@
 Hackful::Application.routes.draw do
-  match "/about" => "content#about"
+  get "admin/mail"
+  post "admin/send_newsletter"
+
+	match "/about" => "content#about"
+
   match "/user/:name" => "users#show", :as => 'user'
 	
   #Voting routes
@@ -16,6 +20,7 @@ Hackful::Application.routes.draw do
   resources :posts
 
   devise_for :users
+  resources :users, has_one: :data_set
 
   # /api/<request>
   scope 'api' do
