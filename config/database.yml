@@ -1,19 +1,19 @@
 #this works on Ubuntu Linux, change for your OS.
 development:
-  adapter: mysql2
-  encoding: utf8
-  database: hackful
-  username: root
-  password:
-  socket: /var/run/mysqld/mysqld.sock
+  adapter: mysql2
+  encoding: utf8
+  database: hackful
+  username: root
+  password:
+  socket: /var/run/mysqld/mysqld.sock
 
 test: &test
-  adapter: mysql2
-  encoding: utf8
-  database: hackful_test
-  username: root
-  password:
-  socket: /var/run/mysqld/mysqld.sock
+  adapter: mysql2
+  encoding: utf8
+  database: hackful_test
+  username: root
+  password:
+  socket: /var/run/mysqld/mysqld.sock
 
 cucumber:
-  <<: *test
+  <<: *test
