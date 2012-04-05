@@ -38,3 +38,13 @@ end
 Then /^I should see "([^"]*)"$/ do |text|
   page.should have_content(text)
 end
+
+When /^I visit "([^"]*)"$/ do |page|
+  visit page
+end
+
+When /^I fill in my user details without submitting$/ do
+  fill_in 'User Name', with: 'pbjorklund'
+  fill_in 'Email', with: 'p.bjorklund@gmail.com'
+  fill_in 'Current password', :with => 'secretpass'
+end
