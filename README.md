@@ -10,6 +10,12 @@ Idea by [@rayhanrafiq](https://twitter.com/rayhanrafiq) and [@mattslight](https:
 
 Hosting donated by [incite ict](http://www.incite-ict.com/)
 
+Setup
+===
+Hackful runs on mysql
+
+Quick fix for OSX sudo ln -s /tmp/mysql.sock /var/run/mysqld/mysqld.sock
+
 Contribution
 ===
 
