@@ -12,10 +12,11 @@ Hosting donated by [incite ict](http://www.incite-ict.com/)
 
 Setup
 ===
-Hackful runs on mysql
+Hackful runs on mysql.
 
-Quick fix for OSX sudo ln -s /tmp/mysql.sock /var/run/mysqld/mysqld.sock
-=======
+Quick fix for getting the configuration to work in OSX as well as in ubuntu
+`sudo ln -s /tmp/mysql.sock /var/run/mysqld/mysqld.sock`
+
 API
 ---
 
