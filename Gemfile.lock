@@ -169,6 +169,8 @@ GEM
     rdiscount (1.6.8)
     rdoc (3.12)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -252,6 +254,7 @@ DEPENDENCIES
   rails_autolink
   rb-fsevent
   rdiscount
+  rest-client
   rspec-rails
   sass-rails (~> 3.1.5)
   spork

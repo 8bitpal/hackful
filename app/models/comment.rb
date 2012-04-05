@@ -21,4 +21,21 @@ class Comment < ActiveRecord::Base
 		end
 		commentable
 	end
+
+	def as_json(options = {})
+		super(
+			:include => {:user => {:only => [:id, :name]}},
+			:except  => [:user_id, :down_votes, :commentable_type],
+			:methods => :voted
+		)
+	end
+
+	def voted
+		current_user = User.current_user
+		unless current_user.blank?
+			current_user.voted?(self)
+		else
+			false
+		end 
+	end
 end

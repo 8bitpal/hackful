@@ -13,18 +13,19 @@ group :assets do
 end
 
 group :test, :development do
-	gem 'cucumber-rails'
+  gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'rspec-rails'
   gem 'cucumber-rails', require: false
   gem "factory_girl_rails"
-	gem 'capybara'
+  gem 'capybara'
   gem "capybara-webkit"
   gem 'fakeweb'
   gem "launchy"
-	gem 'database_cleaner', :group => :test
+  gem 'database_cleaner', :group => :test
   gem 'faker'
   gem 'pry'
+  gem 'rest-client'
 
   if RUBY_PLATFORM.downcase.include?("darwin")
     gem "guard"
