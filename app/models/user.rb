@@ -2,7 +2,10 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, 
+         :token_authenticatable
+
+  cattr_accessor :current_user
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :data_set_attributes
@@ -21,5 +24,13 @@ class User < ActiveRecord::Base
 	:message => "can only contain letters and numbers."
 	
 	make_voter
+
+  def all_notifications
+    {
+      :new_notifications => self.notifications.where(:unread => true),
+      :old_notifications => self.notifications.find(:all, 
+        :conditions => { :unread => false }, :limit => 20)      
+    }
+  end
 end
 

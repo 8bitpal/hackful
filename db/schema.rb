@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20120307155241) do
     t.integer  "down_votes",             :default => 0,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "authentication_token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
