@@ -3,6 +3,7 @@ Hackful::Application.routes.draw do
   post "admin/send_newsletter"
 
 	match "/about" => "content#about"
+  match "/hackfulthon" => "content#hackfulthon"
 
   match "/user/:name" => "users#show", :as => 'user'
 	
