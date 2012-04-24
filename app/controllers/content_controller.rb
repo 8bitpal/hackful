@@ -48,4 +48,8 @@ class ContentController < ApplicationController
     end
   end
 
+  def hackfulthon
+    render layout: false
+  end
+
 end
