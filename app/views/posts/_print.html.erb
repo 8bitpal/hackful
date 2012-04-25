@@ -13,8 +13,9 @@
 	</div>
 	<div class='text_body'>
 		<strong><%= (post.link.nil? or post.link.empty?) ? (link_to(post.title, post)) : (link_to(post.title, post.link)) %></strong>
-		<% unless post.link.nil? or post.link.empty? %>
-			<span class='host'><%= link_to("("+URI.parse(post.link).host.gsub("www.","")+")", "http://"+URI.parse(post.link).host) %> </span>
+		<% uri = URI.parse(post.link) %> 
+		<% unless post.link.nil? or post.link.empty? or uri.host.nil? %>
+			<span class='host'><%= link_to("("+uri.host.gsub("www.","")+")", "http://"+uri.host) %> </span>
 		<% end %>	
 		<p class="markup"><%= markdown(post.text) %></p>
 		<div class='infobar'><%= pluralize(post.votes, "point") %> by <%= (post.user.nil? ? "[Deleted]" : link_to(post.user.name, user_path(post.user.name))) %> <%= time_ago_in_words(post.created_at) %> ago | <%= link_to(pluralize(comment_count(post), "comment"), post) %>
