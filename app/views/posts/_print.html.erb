@@ -13,7 +13,7 @@
 	</div>
 	<div class='text_body'>
 		<strong><%= (post.link.nil? or post.link.empty?) ? (link_to(post.title, post)) : (link_to(post.title, post.link)) %></strong>
-		<% uri = URI.parse(post.link) %> 
+		<% uri = URI.parse(post.link)  %> 
 		<% unless post.link.nil? or post.link.empty? or uri.host.nil? %>
 			<span class='host'><%= link_to("("+uri.host.gsub("www.","")+")", "http://"+uri.host) %> </span>
 		<% end %>	
