@@ -1,4 +1,6 @@
 Hackful::Application.routes.draw do
+  match "/results/:query" => "content#resultspage"
+  
   get "admin/mail"
   post "admin/send_newsletter"
 

@@ -10,7 +10,9 @@ class Post < ActiveRecord::Base
 	validates :title, :length => { :maximum => 255 }, :allow_blank => false
 	validates :text, :length => { :minimum => 2 }, :allow_blank => false
 	
-	make_voteable
+  make_voteable
+
+  elastic_searchable
 
 	# Finds user posts with given page and standard ordering 
 	# (see <tt>Post.order_algorithm</tt> for order algorithm).

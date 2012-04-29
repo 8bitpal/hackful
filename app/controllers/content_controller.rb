@@ -1,4 +1,9 @@
 class ContentController < ApplicationController
+
+  def resultspage
+    @posts = Post.search params[:query]
+  end 
+    
   def frontpage
 		@page = page_number(params[:page])
     @posts = Post.find_frontpage(@page)
