@@ -51,3 +51,5 @@ gem 'rails_autolink'
 gem 'rdiscount'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
+gem 'elastic_searchable'
+
