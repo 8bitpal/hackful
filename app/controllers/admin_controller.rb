@@ -18,4 +18,15 @@ class AdminController < ApplicationController
   	end
   end
 
+  def spam
+    
+  end
+
+  def save_spam_settings
+    @spammers = JSON(params[:spammers])
+    @spammers.each do |spammer|
+      Spammer.create(user_id: User.find_by_name(spammer["name"]).id, reason: spammer["reason"])
+    end
+  end
+
 end

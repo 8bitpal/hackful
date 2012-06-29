@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
 	
 	make_voter
 
+  def is_spammer?
+    !Spammer.find_by_user_id(self.id).nil?
+  end
+
   def all_notifications
     {
       :new_notifications => self.notifications.where(:unread => true),

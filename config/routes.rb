@@ -2,8 +2,10 @@ Hackful::Application.routes.draw do
   get "admin/mail"
   post "admin/send_newsletter"
 
+  get "admin/spam"
+  post "admin/save_spam_settings"
+
 	match "/about" => "content#about"
-  match "/hackfulthon" => "content#hackfulthon"
 
   match "/user/:name" => "users#show", :as => 'user'
 	
