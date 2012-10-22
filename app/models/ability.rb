@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new
 	can :see, Post do |post|
-		if post.user.is_spammer? && post.user.id != user.id
+		if !post.user.nil? && post.user.is_spammer? && post.user.id != user.id
 	      false 
 	    else
 	      true
