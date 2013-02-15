@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 source 'http://gemcutter.org'
 
-gem 'rails'
+gem 'rails', '3.1.10'
 
 gem 'sqlite3'
-gem 'json'
+gem 'json', '>=1.7.7'
 
 group :assets do
   gem 'sass-rails'
@@ -51,5 +51,4 @@ gem 'rails_autolink'
 gem 'rdiscount'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-gem 'json'
 gem 'whenever'
